@@ -3,6 +3,8 @@ import products from './components/Products'
 import Cart from './components/Cart'
 import Nav from './components/Nav'
 import ViewProduct from './components/ViewProduct'
+import { Routes, Route, Link } from 'react-router-dom'
+import About from './components/About'
 
 export default function App() {
     const [items, setItems] = useState(products)
@@ -47,12 +49,25 @@ export default function App() {
         <div className="bg-slate-100">
             <div className="container mx-auto flex font-mono">
                 <Nav />
-                <ViewProduct addToCart={addToCart} items={items} />
-                <Cart
-                    carts={carts}
-                    increaseHandler={increaseHandler}
-                    decreaseHandler={decreaseHandler}
-                />
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <ViewProduct
+                                    addToCart={addToCart}
+                                    items={items}
+                                />
+                                <Cart
+                                    carts={carts}
+                                    increaseHandler={increaseHandler}
+                                    decreaseHandler={decreaseHandler}
+                                />
+                            </>
+                        }
+                    />
+                    <Route path='/about/:id' element={<About items={items} />}/>
+                </Routes>
             </div>
         </div>
     )
