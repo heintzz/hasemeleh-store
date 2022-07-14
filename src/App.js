@@ -9,10 +9,14 @@ export default function App() {
     const [carts, setCarts] = useState([])
 
     const addToCart = (itemID) => {
-        const item = items.filter((item) => item.id === itemID)
-        const newItem = { ...item[0], onCart: true }
+        if (carts.find((cart) => cart.id === itemID)) {
+            console.log('data sudah ada')
+        } else {
+            const item = items.find((item) => item.id === itemID)
+            const newItem = { ...item, onCart: true }
 
-        setCarts([...carts, newItem])
+            setCarts([...carts, newItem])
+        }
     }
 
     return (
@@ -20,7 +24,7 @@ export default function App() {
             <div className="container mx-auto flex font-mono">
                 <Nav />
                 <ViewProduct addToCart={addToCart} items={items} />
-                <Cart carts={carts}/>
+                <Cart carts={carts} />
             </div>
         </div>
     )

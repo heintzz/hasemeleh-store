@@ -5,7 +5,7 @@ const Products = [
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 2,
@@ -13,7 +13,7 @@ const Products = [
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 3,
@@ -21,7 +21,7 @@ const Products = [
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 4,
@@ -29,7 +29,7 @@ const Products = [
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 5,
@@ -37,7 +37,7 @@ const Products = [
         title: 'Sony ZX33OBT',
         type: 'Series 5 SE',
         price: 39.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 6,
@@ -45,7 +45,7 @@ const Products = [
         title: 'Iphone 12',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 7,
@@ -53,7 +53,7 @@ const Products = [
         title: 'Iphone 12',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 8,
@@ -61,7 +61,7 @@ const Products = [
         title: 'Iphone 12',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 9,
@@ -69,7 +69,7 @@ const Products = [
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
     {
         id: 10,
@@ -77,7 +77,7 @@ const Products = [
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
-        onCart: false,
+        count: 1,
     },
 ]
 export default Products
