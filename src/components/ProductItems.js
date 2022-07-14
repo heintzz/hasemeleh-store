@@ -1,5 +1,3 @@
-
-
 export default function ProductItems({ addToCart, items }) {
     return (
         <div className="flex flex-wrap mt-5">
