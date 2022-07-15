@@ -1,7 +1,7 @@
 const Products = [
     {
         id: 1,
-        img: './products/apple-watch.png',
+        img: '/products/apple-watch.png',
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
@@ -9,7 +9,7 @@ const Products = [
     },
     {
         id: 2,
-        img: './products/dell-XPS-13-Black.png',
+        img: '/products/dell-XPS-13-Black.png',
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
@@ -17,7 +17,7 @@ const Products = [
     },
     {
         id: 3,
-        img: './products/dell-XPS-13-White.png',
+        img: '/products/dell-XPS-13-White.png',
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
@@ -25,7 +25,7 @@ const Products = [
     },
     {
         id: 4,
-        img: './products/dell-XPS-15-Black.png',
+        img: '/products/dell-XPS-15-Black.png',
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
@@ -33,7 +33,7 @@ const Products = [
     },
     {
         id: 5,
-        img: './products/headphones.png',
+        img: '/products/headphones.png',
         title: 'Sony ZX33OBT',
         type: 'Series 5 SE',
         price: 39.99,
@@ -41,7 +41,7 @@ const Products = [
     },
     {
         id: 6,
-        img: './products/iphone-12-01.png',
+        img: '/products/iphone-12-01.png',
         title: 'Iphone 12',
         type: 'Series 5 SE',
         price: 529.99,
@@ -49,7 +49,7 @@ const Products = [
     },
     {
         id: 7,
-        img: './products/iphone-12-02.png',
+        img: '/products/iphone-12-02.png',
         title: 'Iphone 12',
         type: 'Series 5 SE',
         price: 529.99,
@@ -57,7 +57,7 @@ const Products = [
     },
     {
         id: 8,
-        img: './products/iphone-12-03.png',
+        img: '/products/iphone-12-03.png',
         title: 'Iphone 12',
         type: 'Series 5 SE',
         price: 529.99,
@@ -65,7 +65,7 @@ const Products = [
     },
     {
         id: 9,
-        img: './products/iphone-12-Pro-01.png',
+        img: '/products/iphone-12-Pro-01.png',
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
@@ -73,7 +73,7 @@ const Products = [
     },
     {
         id: 10,
-        img: './products/iphone-12-Pro-02.png',
+        img: '/products/iphone-12-Pro-02.png',
         title: 'Apple Watch',
         type: 'Series 5 SE',
         price: 529.99,
