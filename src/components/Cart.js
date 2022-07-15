@@ -1,17 +1,17 @@
 export default function Cart({ carts, increaseHandler, decreaseHandler}) {
     return (
-        <div className="w-4/12 flex flex-col mt-5 px-5">
+        <div className="w-3/12 flex flex-col mt-5 px-5">
             <h2 className="font-semibold">Cart</h2>
-            {carts.length === 0 && <p>No Item</p>}
+            {carts.length === 0 && <p className="mt-2">No Item</p>}
             <div className="my-5">
                 {carts.map((cart) => {
                     const { title, type, price, img, id, amount } = cart
                     return (
-                        <div className="flex bg-blue-200 items-center mb-5 py-2 gap-x-3">
+                        <div className="flex bg-blue-200 items-center py-2 gap-x-3 mb-5 last:mb-0 h-24">
                             <img className="w-3/12" src={img} key={id} />
                             <div className="block text-sm">
                                 <h4>
-                                    {title} - 
+                                    {title} - {' '}  
                                     <span className="text-xs inline">
                                         {type}
                                     </span>
@@ -39,7 +39,7 @@ export default function Cart({ carts, increaseHandler, decreaseHandler}) {
             {carts.length > 0 && (
                 <button className="flex p-2 gap-x-3 bg-blue-100 w-fit">
                     <img src="./icons/bag-handle.svg" />
-                    <p>View Cart</p>
+                    <p>Checkout</p>
                 </button>
             )}
         </div>

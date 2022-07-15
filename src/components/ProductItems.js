@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export default function ProductItems({ addToCart, items }) {
+export default function ProductItems({ addToCart, items, searchKey }) {
     return (
         <div className="flex flex-wrap mt-5">
             {items.map((item) => {

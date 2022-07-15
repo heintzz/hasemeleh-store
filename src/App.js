@@ -3,10 +3,11 @@ import products from './components/Products'
 import Cart from './components/Cart'
 import Nav from './components/Nav'
 import ViewProduct from './components/ViewProduct'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import About from './components/About'
 
 export default function App() {
+    // eslint-disable-next-line
     const [items, setItems] = useState(products)
     const [carts, setCarts] = useState([])
 
@@ -46,7 +47,7 @@ export default function App() {
         }
     }
     return (
-        <div className="bg-slate-100">
+        <div className="bg-slate-100 min-h-screen">
             <div className="container mx-auto flex font-mono">
                 <Nav />
                 <Routes>
@@ -57,6 +58,7 @@ export default function App() {
                                 <ViewProduct
                                     addToCart={addToCart}
                                     items={items}
+                                    
                                 />
                                 <Cart
                                     carts={carts}
