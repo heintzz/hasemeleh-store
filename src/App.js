@@ -46,6 +46,7 @@ export default function App() {
             setCarts([...updatedCarts])
         }
     }
+    
     return (
         <div className="bg-slate-100 min-h-screen">
             <div className="container mx-auto flex font-mono">
