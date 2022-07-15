@@ -1,14 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import products from './components/Products'
 import Cart from './components/Cart'
 import Nav from './components/Nav'
 import ViewProduct from './components/ViewProduct'
 import { Routes, Route } from 'react-router-dom'
 import About from './components/About'
+import { db } from './config/firebase-config'
+import { collection, getDocs } from 'firebase/firestore'
 
 export default function App() {
     // eslint-disable-next-line
-    const [items, setItems] = useState(products)
+    const [items, setItems] = useState([])
+    const productsRef = collection(db, 'products')
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const data = await getDocs(productsRef)
+            setItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        }
+
+        getProducts()
+    }, [])
     const [carts, setCarts] = useState([])
 
     const addToCart = (itemID) => {
@@ -46,7 +58,7 @@ export default function App() {
             setCarts([...updatedCarts])
         }
     }
-    
+
     return (
         <div className="bg-slate-100 min-h-screen">
             <div className="container mx-auto flex font-mono">
@@ -59,7 +71,6 @@ export default function App() {
                                 <ViewProduct
                                     addToCart={addToCart}
                                     items={items}
-                                    
                                 />
                                 <Cart
                                     carts={carts}
@@ -69,7 +80,10 @@ export default function App() {
                             </>
                         }
                     />
-                    <Route path='/about/:id' element={<About items={items} />}/>
+                    <Route
+                        path="/about/:id"
+                        element={<About items={items} />}
+                    />
                 </Routes>
             </div>
         </div>
