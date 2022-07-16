@@ -19,7 +19,7 @@ export default function ProductItems({ addToCart, items, keyword }) {
                               >
                                   <Link to={`/about/${id}`}>
                                       <img
-                                          className="bg-slate-300 rounded-3xl mb-3 max-w-[100%]"
+                                          className="bg-slate-300 rounded-3xl mb-3 w-full"
                                           src={img}
                                           alt={title}
                                       />
@@ -46,7 +46,7 @@ export default function ProductItems({ addToCart, items, keyword }) {
                           >
                               <Link to={`/about/${id}`}>
                                   <img
-                                      className="bg-slate-300 rounded-3xl mb-3 max-w-[100%]"
+                                      className="bg-slate-300 rounded-3xl mb-3 w-full"
                                       src={img}
                                       alt={title}
                                   />

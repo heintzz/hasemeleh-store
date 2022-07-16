@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { useEffect, useState } from 'react'
 import products from './components/Products'
 import Cart from './components/Cart'
@@ -11,6 +12,8 @@ import { collection, getDocs } from 'firebase/firestore'
 export default function App() {
     // eslint-disable-next-line
     const [items, setItems] = useState([])
+    const [carts, setCarts] = useState([])
+
     const productsRef = collection(db, 'products')
 
     useEffect(() => {
@@ -21,7 +24,6 @@ export default function App() {
 
         getProducts()
     }, [])
-    const [carts, setCarts] = useState([])
 
     const addToCart = (itemID) => {
         if (carts.find((cart) => cart.id === itemID)) {
@@ -35,17 +37,19 @@ export default function App() {
 
     const increaseHandler = (cartID) => {
         const cart = carts.find((cart) => cart.id === cartID)
+        console.log(cart)
         const cartindex = carts.indexOf(cart)
-
+        
         const updatedCart = { ...cart, amount: cart.amount + 1 }
         const updatedCarts = carts.filter((cart) => cart.id !== cartID)
         updatedCarts.splice(cartindex, 0, updatedCart)
 
         setCarts([...updatedCarts])
     }
-
+    
     const decreaseHandler = (cartID) => {
         const cart = carts.find((cart) => cart.id === cartID)
+        console.log(cart)
         const cartindex = carts.indexOf(cart)
 
         const updatedCart = { ...cart, amount: cart.amount - 1 }
