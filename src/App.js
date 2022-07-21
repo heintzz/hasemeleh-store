@@ -5,7 +5,7 @@ import Nav from './components/Nav'
 import ViewProduct from './components/ViewProduct'
 import { Routes, Route } from 'react-router-dom'
 import About from './components/About'
-import { db } from './config/firebase-config'
+import { db } from './config/firebase-config.js'
 import {
     doc,
     addDoc,
