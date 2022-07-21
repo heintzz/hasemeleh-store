@@ -12,6 +12,7 @@ export default function Cart({ carts, increaseHandler, decreaseHandler}) {
             <div className="my-5">
                 {carts.map((cart) => {
                     const { title, type, price, img, id, amount } = cart
+                     const itemsPrice = (price * amount).toFixed(2)
                     return (
                         <div
                             className="flex bg-blue-200 items-center py-2 gap-x-3 mb-5 last:mb-0 h-24"
@@ -20,13 +21,10 @@ export default function Cart({ carts, increaseHandler, decreaseHandler}) {
                             <img className="w-3/12" src={img} />
                             <div className="block text-sm">
                                 <h4>
-                                    {title} -{' '}
-                                    <span className="text-xs inline">
-                                        {type}
-                                    </span>
+                                    {title}
                                 </h4>
 
-                                <p>{`$ ${price * amount}`}</p>
+                                <p>{`$ ${itemsPrice}`}</p>
                                 <div className="my-1">
                                     <button
                                         className="px-3 bg-black text-white rounded-lg mr-2"
@@ -50,7 +48,7 @@ export default function Cart({ carts, increaseHandler, decreaseHandler}) {
             {carts.length > 0 && (
                 <button className="flex p-2 gap-x-3 bg-blue-100 w-fit">
                     <img src="./icons/bag-handle.svg" />
-                    <p>{finalPrice}</p>
+                    <p>{`$ ${finalPrice.toFixed(2)}`}</p>
                 </button>
             )}
         </div>

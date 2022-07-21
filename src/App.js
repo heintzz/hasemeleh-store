@@ -11,11 +11,11 @@ import {
     addDoc,
     collection,
     getDocs,
-    serverTimestamp,
     setDoc,
     deleteDoc,
     query,
     orderBy,
+    serverTimestamp,
 } from 'firebase/firestore'
 import Login from './components/Login'
 
@@ -25,9 +25,7 @@ export default function App() {
     const [carts, setCarts] = useState([])
 
     const productsRef = query(collection(db, 'products'), orderBy('title'))
-    const cartsRef = carts
-        ? collection(db, 'carts')
-        : query(collection(db, 'carts'), orderBy('createdAt'))
+    const cartsRef = collection(db, 'carts')
 
     useEffect(() => {
         const getProducts = async () => {
@@ -36,7 +34,6 @@ export default function App() {
                 data.docs.map((doc) => ({
                     ...doc.data(),
                     id: doc.id,
-                    createdAt: serverTimestamp(),
                 }))
             )
         }
@@ -50,26 +47,24 @@ export default function App() {
             setCarts(
                 data.docs.map((doc) => ({
                     ...doc.data(),
-                    createdAt: serverTimestamp(),
                 }))
             )
         }
 
         getCarts()
-    }, [carts])
+    }, [])
 
     const addToCart = async (itemID) => {
         const findItem = carts.find((cart) => cart.id === itemID)
         if (findItem) {
             increaseHandler(itemID)
-            // console.log(itemID)
             // console.log('item sudah ditambahkan.')
         } else {
             const item = items.find((item) => item.id === itemID)
-            // setCarts([...carts, item])
 
             try {
                 await addDoc(cartsRef, item)
+                setCarts([...carts, item])
             } catch (e) {
                 console.error('Error adding document: ', e)
             }
@@ -78,55 +73,46 @@ export default function App() {
 
     const increaseHandler = async (cartID) => {
         const cart = carts.find((cart) => cart.id === cartID)
+        const cartIndex = carts.indexOf(cart)
+        
+        const updatedCart = { ...cart, amount: cart.amount + 1 }
+        const updatedCarts = carts.filter((cart) => cart.id !== cartID)
+        updatedCarts.splice(cartIndex, 0, updatedCart)
 
+        setCarts([...updatedCarts])
+        
         const data = await getDocs(cartsRef)
         const docID = data.docs.find((item) => item.data().id === cartID).id
-
         const updatedRef = doc(db, 'carts', docID)
+        
         await setDoc(updatedRef, {
             ...cart,
             amount: cart.amount + 1,
         })
-
-        // console.log(cart)
-        // const cartIndex = carts.indexOf(cart)
-        // console.log(cartIndex)
-
-        // const updatedCart = { ...cart, amount: cart.amount + 1 }
-        // const updatedCarts = carts.filter((cart) => cart.id !== cartID)
-        // updatedCarts.splice(cartIndex, 0, updatedCart)
-
-        // setCarts([...updatedCarts])
     }
 
     const decreaseHandler = async (cartID) => {
         const cart = carts.find((cart) => cart.id === cartID)
+        const cartindex = carts.indexOf(cart)
+        
+        const updatedCart = { ...cart, amount: cart.amount - 1 }
+        const updatedCarts = carts.filter((cart) => cart.id !== cartID)
+        updatedCarts.splice(cartindex, 0, updatedCart)
 
         const data = await getDocs(cartsRef)
         const docID = data.docs.find((item) => item.data().id === cartID).id
-
         const updatedRef = doc(db, 'carts', docID)
+
         if (cart.amount - 1) {
             await setDoc(updatedRef, {
                 ...cart,
                 amount: cart.amount - 1,
             })
+            setCarts([...updatedCarts])
         } else {
             await deleteDoc(doc(db, 'carts', docID))
+            setCarts([...carts.filter((cart) => cart.id !== cartID)])
         }
-
-        // const cart = carts.find((cart) => cart.id === cartID)
-        // const cartindex = carts.indexOf(cart)
-
-        // const updatedCart = { ...cart, amount: cart.amount - 1 }
-        // const updatedCarts = carts.filter((cart) => cart.id !== cartID)
-        // updatedCarts.splice(cartindex, 0, updatedCart)
-
-        // if (updatedCart.amount <= 0) {
-        //     setCarts([...carts.filter((cart) => cart.id !== cartID)])
-        // } else {
-        //     setCarts([...updatedCarts])
-        // }
     }
 
     return (

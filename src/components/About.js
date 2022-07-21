@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 
 export default function About({ items }) {
     const { id } = useParams()
-    const {img, title, type, price} = items.find((item) => item.id == id)
+    const {img, title, type, price} = items.find((item) => item.id === id)
 
     return (
         <div className="w-11/12 py-[26px]">
