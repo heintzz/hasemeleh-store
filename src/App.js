@@ -12,18 +12,22 @@ import {
     collection,
     getDocs,
     serverTimestamp,
-    updateDoc,
     setDoc,
     deleteDoc,
+    query,
+    orderBy,
 } from 'firebase/firestore'
+import Login from './components/Login'
 
 export default function App() {
     // eslint-disable-next-line
     const [items, setItems] = useState([])
     const [carts, setCarts] = useState([])
 
-    const productsRef = collection(db, 'products')
-    const cartsRef = collection(db, 'carts')
+    const productsRef = query(collection(db, 'products'), orderBy('title'))
+    const cartsRef = carts
+        ? collection(db, 'carts')
+        : query(collection(db, 'carts'), orderBy('createdAt'))
 
     useEffect(() => {
         const getProducts = async () => {
@@ -32,6 +36,7 @@ export default function App() {
                 data.docs.map((doc) => ({
                     ...doc.data(),
                     id: doc.id,
+                    createdAt: serverTimestamp(),
                 }))
             )
         }
@@ -56,9 +61,9 @@ export default function App() {
     const addToCart = async (itemID) => {
         const findItem = carts.find((cart) => cart.id === itemID)
         if (findItem) {
-            // increaseHandler(itemID)
-            console.log(itemID)
-            console.log('item sudah ditambahkan.')
+            increaseHandler(itemID)
+            // console.log(itemID)
+            // console.log('item sudah ditambahkan.')
         } else {
             const item = items.find((item) => item.id === itemID)
             // setCarts([...carts, item])
@@ -76,8 +81,8 @@ export default function App() {
 
         const data = await getDocs(cartsRef)
         const docID = data.docs.find((item) => item.data().id === cartID).id
-        const updatedRef = doc(db, 'carts', docID)
 
+        const updatedRef = doc(db, 'carts', docID)
         await setDoc(updatedRef, {
             ...cart,
             amount: cart.amount + 1,
@@ -127,12 +132,12 @@ export default function App() {
     return (
         <div className="bg-slate-100 min-h-screen">
             <div className="max-w-7xl mx-auto flex font-mono pl-2">
-                <Nav />
                 <Routes>
                     <Route
                         path="/"
                         element={
                             <>
+                                <Nav />
                                 <ViewProduct
                                     addToCart={addToCart}
                                     items={items}
@@ -147,8 +152,14 @@ export default function App() {
                     />
                     <Route
                         path="/about/:id"
-                        element={<About items={items} />}
+                        element={
+                            <>
+                                <Nav />
+                                <About items={items} />
+                            </>
+                        }
                     />
+                    <Route path="/login" element={<Login />} />
                 </Routes>
             </div>
         </div>

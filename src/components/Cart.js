@@ -1,4 +1,10 @@
 export default function Cart({ carts, increaseHandler, decreaseHandler}) {
+
+    const finalPrice = carts.reduce((acc, cur) => {
+        acc += cur.price * cur.amount
+        return  acc
+    }, 0)
+
     return (
         <div className="w-3/12 flex flex-col mt-5 px-2">
             <h2 className="font-semibold">Cart</h2>
@@ -44,7 +50,7 @@ export default function Cart({ carts, increaseHandler, decreaseHandler}) {
             {carts.length > 0 && (
                 <button className="flex p-2 gap-x-3 bg-blue-100 w-fit">
                     <img src="./icons/bag-handle.svg" />
-                    <p>Checkout</p>
+                    <p>{finalPrice}</p>
                 </button>
             )}
         </div>
