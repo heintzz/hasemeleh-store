@@ -11,7 +11,7 @@ export default function ProductItems({ addToCart, items, keyword }) {
                               .includes(keyword.toLowerCase())
                       )
                       .map((item) => {
-                          const { img, title, price, type, id } = item
+                          const { img, title, price, type, id} = item
                           return (
                               <div
                                   key={id}

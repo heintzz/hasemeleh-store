@@ -1,26 +1,31 @@
 export default function Cart({ carts, increaseHandler, decreaseHandler}) {
     return (
-        <div className="w-3/12 flex flex-col mt-5 px-5">
+        <div className="w-3/12 flex flex-col mt-5 px-2">
             <h2 className="font-semibold">Cart</h2>
             {carts.length === 0 && <p className="mt-2">No Item</p>}
             <div className="my-5">
                 {carts.map((cart) => {
                     const { title, type, price, img, id, amount } = cart
                     return (
-                        <div className="flex bg-blue-200 items-center py-2 gap-x-3 mb-5 last:mb-0 h-24">
-                            <img className="w-3/12" src={img} key={id} />
+                        <div
+                            className="flex bg-blue-200 items-center py-2 gap-x-3 mb-5 last:mb-0 h-24"
+                            key={id}
+                        >
+                            <img className="w-3/12" src={img} />
                             <div className="block text-sm">
                                 <h4>
-                                    {title} - {' '}  
+                                    {title} -{' '}
                                     <span className="text-xs inline">
                                         {type}
                                     </span>
                                 </h4>
 
-                                <p>{`$ ${price*amount}`}</p>
+                                <p>{`$ ${price * amount}`}</p>
                                 <div className="my-1">
-                                    <button className="px-3 bg-black text-white rounded-lg mr-2"
-                                    onClick={() => decreaseHandler(id)}>
+                                    <button
+                                        className="px-3 bg-black text-white rounded-lg mr-2"
+                                        onClick={() => decreaseHandler(id)}
+                                    >
                                         -
                                     </button>
                                     <span>{amount}</span>
