@@ -17,25 +17,29 @@ export default function Cart({ carts, increaseHandler, decreaseHandler }) {
                             className="flex bg-blue-200 items-center py-2 gap-x-5 mb-5 last:mb-0 h-24"
                             key={id}
                         >
-                            <img className="w-3/12 ml-3 object-contain" src={img} />
-                            <div className="block text-sm">
+                            <img
+                                className="w-3/12 max-w-[80px] ml-3"
+                                src={img}
+                            />
+                            <div className="block text-sm w-8/12 mr-2">
                                 <h4>{title}</h4>
-
-                                <p>{`$ ${itemsPrice}`}</p>
-                                <div className="my-1">
-                                    <button
-                                        className="px-3 bg-black text-white rounded-lg mr-2"
-                                        onClick={() => decreaseHandler(id)}
-                                    >
-                                        -
-                                    </button>
-                                    <span>{amount}</span>
-                                    <button
-                                        className="px-3 bg-black text-white rounded-lg ml-2"
-                                        onClick={() => increaseHandler(id)}
-                                    >
-                                        +
-                                    </button>
+                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                                    <p>{`$ ${itemsPrice}`}</p>
+                                    <div className="my-1">
+                                        <button
+                                            className="px-3 bg-black text-white rounded-lg mr-2"
+                                            onClick={() => decreaseHandler(id)}
+                                        >
+                                            -
+                                        </button>
+                                        <span>{amount}</span>
+                                        <button
+                                            className="px-3 bg-black text-white rounded-lg ml-2"
+                                            onClick={() => increaseHandler(id)}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

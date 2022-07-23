@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
 export default function Nav({carts}) {
+    const total = carts.reduce((acc, cur) => {
+        acc += cur.amount
+        return acc
+    }, 0)
     // eslint-disable-next-line
     const [isOpen, setIsOpen] = useState(false)
     return (
@@ -20,7 +24,7 @@ export default function Nav({carts}) {
                 <div className="relative md:hidden">
                     <img src="/icons/bag-handle.svg" />
                     <div className="absolute top-4 -right-1 w-[14px] h-[14px] text-xs text-center rounded-full bg-white">
-                        {carts.length}
+                        {total}
                     </div>
                 </div>
                 <img className="mt-auto" src="/icons/logout.svg" />
