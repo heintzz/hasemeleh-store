@@ -1,18 +1,17 @@
-export default function Cart({ carts, increaseHandler, decreaseHandler}) {
-
+export default function Cart({ carts, increaseHandler, decreaseHandler }) {
     const finalPrice = carts.reduce((acc, cur) => {
         acc += cur.price * cur.amount
-        return  acc
+        return acc
     }, 0)
 
     return (
-        <div className="w-3/12 flex flex-col mt-5 px-2">
+        <div className="w-3/12 flex flex-col mt-5 pr-5">
             <h2 className="font-semibold">Cart</h2>
             {carts.length === 0 && <p className="mt-2">No Item</p>}
             <div className="my-5">
                 {carts.map((cart) => {
                     const { title, type, price, img, id, amount } = cart
-                     const itemsPrice = (price * amount).toFixed(2)
+                    const itemsPrice = (price * amount).toFixed(2)
                     return (
                         <div
                             className="flex bg-blue-200 items-center py-2 gap-x-3 mb-5 last:mb-0 h-24"
@@ -20,9 +19,7 @@ export default function Cart({ carts, increaseHandler, decreaseHandler}) {
                         >
                             <img className="w-3/12" src={img} />
                             <div className="block text-sm">
-                                <h4>
-                                    {title}
-                                </h4>
+                                <h4>{title}</h4>
 
                                 <p>{`$ ${itemsPrice}`}</p>
                                 <div className="my-1">

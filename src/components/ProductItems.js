@@ -11,11 +11,11 @@ export default function ProductItems({ addToCart, items, keyword }) {
                               .includes(keyword.toLowerCase())
                       )
                       .map((item) => {
-                          const { img, title, price, type, id} = item
+                          const { img, title, price, type, id } = item
                           return (
                               <div
                                   key={id}
-                                  className="flex flex-col w-4/12 p-6 text-sm hover:scale-110 transition duration-700"
+                                  className="flex flex-col sm:w-6/12 lg:w-4/12 p-6 text-sm hover:scale-110 transition duration-700"
                               >
                                   <Link to={`/about/${id}`}>
                                       <img
@@ -42,7 +42,7 @@ export default function ProductItems({ addToCart, items, keyword }) {
                       return (
                           <div
                               key={id}
-                              className="flex flex-col w-4/12 p-6 text-sm hover:scale-110 transition duration-700"
+                              className="flex flex-col sm:w-6/12 lg:w-4/12 p-6 text-sm hover:scale-110 transition duration-700"
                           >
                               <Link to={`/about/${id}`}>
                                   <img

@@ -38,10 +38,6 @@ export default function App() {
             )
         }
 
-        getProducts()
-    }, [])
-
-    useEffect(() => {
         const getCarts = async () => {
             const data = await getDocs(cartsRef)
             setCarts(
@@ -51,6 +47,7 @@ export default function App() {
             )
         }
 
+        getProducts()
         getCarts()
     }, [])
 
@@ -74,17 +71,17 @@ export default function App() {
     const increaseHandler = async (cartID) => {
         const cart = carts.find((cart) => cart.id === cartID)
         const cartIndex = carts.indexOf(cart)
-        
+
         const updatedCart = { ...cart, amount: cart.amount + 1 }
         const updatedCarts = carts.filter((cart) => cart.id !== cartID)
         updatedCarts.splice(cartIndex, 0, updatedCart)
 
         setCarts([...updatedCarts])
-        
+
         const data = await getDocs(cartsRef)
         const docID = data.docs.find((item) => item.data().id === cartID).id
         const updatedRef = doc(db, 'carts', docID)
-        
+
         await setDoc(updatedRef, {
             ...cart,
             amount: cart.amount + 1,
@@ -94,7 +91,7 @@ export default function App() {
     const decreaseHandler = async (cartID) => {
         const cart = carts.find((cart) => cart.id === cartID)
         const cartindex = carts.indexOf(cart)
-        
+
         const updatedCart = { ...cart, amount: cart.amount - 1 }
         const updatedCarts = carts.filter((cart) => cart.id !== cartID)
         updatedCarts.splice(cartindex, 0, updatedCart)
@@ -117,7 +114,7 @@ export default function App() {
 
     return (
         <div className="bg-slate-100 min-h-screen">
-            <div className="max-w-7xl mx-auto flex font-mono pl-2">
+            <div className="max-w-7xl mx-auto flex font-mono pl-5">
                 <Routes>
                     <Route
                         path="/"
