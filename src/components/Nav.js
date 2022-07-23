@@ -1,20 +1,28 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-export default function Nav() {
+export default function Nav({carts}) {
     // eslint-disable-next-line
     const [isOpen, setIsOpen] = useState(false)
     return (
         <div className="w-1/12">
             <div className="fixed flex flex-col items-start inset-y-5 gap-y-8 p-2 w-10 rounded-lg bg-blue-100 ">
                 <div className="relative">
-                    <img src={isOpen ? 'icons/close.svg' : 'icons/menu.svg'} alt='open close button' />
+                    <img
+                        src={isOpen ? 'icons/close.svg' : 'icons/menu.svg'}
+                        alt="open close button"
+                    />
                     {/* <img
                         className="bg-slate-600 absolute top-0"
                         src="icons/close.svg"
                     /> */}
                 </div>
                 <img src="/icons/store-front.svg" />
-                <img src="/icons/bag-handle.svg" />
+                <div className="relative md:hidden">
+                    <img src="/icons/bag-handle.svg" />
+                    <div className="absolute top-4 -right-1 w-[14px] h-[14px] text-xs text-center rounded-full bg-white">
+                        {carts.length}
+                    </div>
+                </div>
                 <img className="mt-auto" src="/icons/logout.svg" />
             </div>
         </div>

@@ -5,7 +5,7 @@ export default function Cart({ carts, increaseHandler, decreaseHandler }) {
     }, 0)
 
     return (
-        <div className="w-3/12 flex flex-col mt-5 pr-5">
+        <div className="hidden md:display-block md:w-4/12 md:flex md:flex-col mt-5 pr-5">
             <h2 className="font-semibold">Cart</h2>
             {carts.length === 0 && <p className="mt-2">No Item</p>}
             <div className="my-5">
@@ -14,10 +14,10 @@ export default function Cart({ carts, increaseHandler, decreaseHandler }) {
                     const itemsPrice = (price * amount).toFixed(2)
                     return (
                         <div
-                            className="flex bg-blue-200 items-center py-2 gap-x-3 mb-5 last:mb-0 h-24"
+                            className="flex bg-blue-200 items-center py-2 gap-x-5 mb-5 last:mb-0 h-24"
                             key={id}
                         >
-                            <img className="w-3/12" src={img} />
+                            <img className="w-3/12 ml-3 object-contain" src={img} />
                             <div className="block text-sm">
                                 <h4>{title}</h4>
 

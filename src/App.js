@@ -120,7 +120,7 @@ export default function App() {
                         path="/"
                         element={
                             <>
-                                <Nav />
+                                <Nav carts={carts} />
                                 <ViewProduct
                                     addToCart={addToCart}
                                     items={items}
@@ -137,7 +137,7 @@ export default function App() {
                         path="/about/:id"
                         element={
                             <>
-                                <Nav />
+                                <Nav carts={carts} />
                                 <About items={items} />
                             </>
                         }

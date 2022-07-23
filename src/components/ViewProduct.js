@@ -21,7 +21,7 @@ export default function ViewProduct({ addToCart, items}) {
     return (
         <>
             {/* border-r-2 border-slate-300 */}
-            <div className="w-8/12 my-5 px-5 ">
+            <div className="w-10/12 md:w-7/12 my-5 px-5 ">
                 <SearchBar
                     onChangeHandler={onChangeHandler}
                     searchKey={searchKey}

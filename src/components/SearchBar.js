@@ -1,6 +1,6 @@
 export default function SearchBar({ searchKey, onChangeHandler, enterHandler }) {
     return (
-        <div className="flex flex-col max-w-xs mx-auto">
+        <div className="flex flex-col max-w-xs pl-6 md:pl-0 md:mx-auto">
             <label htmlFor="search-bar" className="font-semibold">
                 Search Item
             </label>
