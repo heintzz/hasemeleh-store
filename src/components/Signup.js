@@ -1,8 +1,8 @@
 import React from 'react'
 import Authentication from './Authentication'
 
-export default function Login() {
-    return <Authentication authType="Login" />
+export default function Signup() {
+    return <Authentication authType='Sign up' />
 }
 
 // <div className="h-screen w-screen flex flex-col gap-y-5 items-center justify-center">
@@ -17,15 +17,15 @@ export default function Login() {
 //             autoComplete="on"
 //         />
 //         <Link
-//             to={isLogin ? '/home' : '/'}
+//             to={'/'}
 //             type="submit"
-//             onClick={mauLogin}
+//             onClick={mauRegister}
 //             className="bg-blue-400 text-white rounded-lg mt-5 px-2 w-fit place-self-end"
 //         >
-//             Login
+//             Sign Up
 //         </Link>
 //     </form>
 //     <p>
-//         Don't have an account? <Link to="/signup">Sign Up</Link>
+//         Have an account already? <Link to="/">Login</Link>
 //     </p>
 // </div>

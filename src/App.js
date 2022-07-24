@@ -1,10 +1,11 @@
 // eslint-disable-next-line
 import { useEffect, useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Cart from './components/Cart'
 import Nav from './components/Nav'
 import ViewProduct from './components/ViewProduct'
-import { Routes, Route } from 'react-router-dom'
 import About from './components/About'
+import Login from './components/Login'
 import { db } from './config/firebase-config.js'
 import {
     doc,
@@ -15,14 +16,14 @@ import {
     deleteDoc,
     query,
     orderBy,
-    serverTimestamp,
 } from 'firebase/firestore'
-import Login from './components/Login'
+import Signup from './components/Signup'
 
 export default function App() {
     // eslint-disable-next-line
     const [items, setItems] = useState([])
     const [carts, setCarts] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const productsRef = query(collection(db, 'products'), orderBy('title'))
     const cartsRef = collection(db, 'carts')
@@ -30,6 +31,7 @@ export default function App() {
     useEffect(() => {
         const getProducts = async () => {
             const data = await getDocs(productsRef)
+            setLoading(false)
             setItems(
                 data.docs.map((doc) => ({
                     ...doc.data(),
@@ -55,7 +57,6 @@ export default function App() {
         const findItem = carts.find((cart) => cart.id === itemID)
         if (findItem) {
             increaseHandler(itemID)
-            // console.log('item sudah ditambahkan.')
         } else {
             const item = items.find((item) => item.id === itemID)
 
@@ -115,15 +116,16 @@ export default function App() {
     return (
         <div className="bg-slate-100 min-h-screen">
             <div className="max-w-7xl mx-auto flex font-mono pl-5">
+                <Nav carts={carts} />
                 <Routes>
                     <Route
-                        path="/"
+                        path="/home"
                         element={
                             <>
-                                <Nav carts={carts} />
                                 <ViewProduct
                                     addToCart={addToCart}
                                     items={items}
+                                    loading={loading}
                                 />
                                 <Cart
                                     carts={carts}
@@ -135,14 +137,10 @@ export default function App() {
                     />
                     <Route
                         path="/about/:id"
-                        element={
-                            <>
-                                <Nav carts={carts} />
-                                <About items={items} />
-                            </>
-                        }
+                        element={<About items={items} />}
                     />
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
                 </Routes>
             </div>
         </div>

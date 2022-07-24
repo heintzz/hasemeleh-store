@@ -14,6 +14,7 @@ export default function Nav({carts}) {
                     <img
                         src={isOpen ? 'icons/close.svg' : 'icons/menu.svg'}
                         alt="open close button"
+                        onClick={() => setIsOpen(!isOpen)}
                     />
                     {/* <img
                         className="bg-slate-600 absolute top-0"
