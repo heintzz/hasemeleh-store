@@ -1,6 +1,6 @@
 import Item from './Item'
 
-export default function ProductItems({ addToCart, items, keyword }) {
+export default function ProductItems({ addToCart, isLogin, items, keyword }) {
     const filteredItems = items.filter(
         (item) =>
             item.title.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -16,17 +16,23 @@ export default function ProductItems({ addToCart, items, keyword }) {
                             <Item
                                 item={item}
                                 addToCart={addToCart}
+                                isLogin={isLogin}
                                 key={item.id}
                             />
                         )
                     })
                 ) : (
-                    <h2>barangya kaga ada</h2>
+                    <h2>barangnya kaga ada</h2>
                 )
             ) : (
                 items.map((item) => {
                     return (
-                        <Item item={item} addToCart={addToCart} key={item.id} />
+                        <Item
+                            item={item}
+                            addToCart={addToCart}
+                            isLogin={isLogin}
+                            key={item.id}
+                        />
                     )
                 })
             )}

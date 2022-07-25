@@ -1,12 +1,14 @@
 import { Link, useParams } from 'react-router-dom'
 
-export default function About({ items }) {
-    const { id } = useParams()
-    const { img, title, type, price } = items.find((item) => item.id === id)
+export default function About({ items, userID }) {
+    const { itemId } = useParams()
+    const { img, title, type, price } = items.length
+        ? items.find((item) => item.id === itemId)
+        : {}
 
-    return (
+    return items.length ? (
         <div className="min-w-[300px] py-[26px] ml-10 pr-5 sm:ml-0">
-            <Link to="/">
+            <Link to={`/${userID}`}>
                 <img src="/icons/back.svg" className="inline-block w-5" />
                 <span> back </span>
             </Link>
@@ -39,5 +41,7 @@ export default function About({ items }) {
                 </div>
             </div>
         </div>
+    ) : (
+        <h1 className="mt-[26px]">loading kak...</h1>
     )
 }

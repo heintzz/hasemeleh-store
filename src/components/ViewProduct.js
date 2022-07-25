@@ -2,7 +2,7 @@ import ProductItems from './ProductItems'
 import SearchBar from './SearchBar'
 import { useState } from 'react'
 
-export default function ViewProduct({ addToCart, items, loading }) {
+export default function ViewProduct({ addToCart, items, loading, isLogin }) {
     const [searchKey, setSearchKey] = useState('')
     const [keyword, setKeyword] = useState('')
 
@@ -29,6 +29,7 @@ export default function ViewProduct({ addToCart, items, loading }) {
             ) : (
                 <ProductItems
                     addToCart={addToCart}
+                    isLogin={isLogin}
                     items={items}
                     keyword={keyword}
                 />

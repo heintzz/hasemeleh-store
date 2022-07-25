@@ -7,11 +7,15 @@ import {
 } from 'firebase/auth'
 import { addDoc, collection } from 'firebase/firestore'
 
-export default function Authentication({ authType }) {
-    console.log(authType)
-    const [isLogin, setIsLogin] = useState(false)
-    const path = authType === 'Login' ? (isLogin ? '/home' : '/') : '/'
-
+export default function Authentication({
+    authType,
+    isLogin,
+    setIsLogin,
+    userID,
+    setUserID,
+}) {
+    const path =
+        authType === 'Login' ? (isLogin ? `/${userID}` : '/login') : '/login'
     const usersRef = collection(db, 'users')
 
     const authButton = useRef(null)
@@ -25,10 +29,13 @@ export default function Authentication({ authType }) {
                     .then((userCredential) => {
                         const user = userCredential.user.uid
                         setIsLogin(true)
+                        setUserID(user)
+                        // setTimeout(() => setIsLogin(false))
                     })
                     .catch((err) => {
                         console.log(err.message)
                     })
+
                 break
             case 'Sign up':
                 createUserWithEmailAndPassword(auth, email, password)
@@ -64,14 +71,15 @@ export default function Authentication({ authType }) {
                     {authType}
                 </Link>
             </form>
-            <p>
-                {authType === 'Login'
-                    ? 'Have an account already? '
-                    : `Don't have an account? `}
-                <Link to={authType === 'Login' ? '/signup' : '/'}>
-                    {authType === 'Login' ? 'Sign up' : 'Login'}
-                </Link>
-            </p>
+            {authType === 'Login' ? (
+                <p>
+                    Don't have an account? <Link to="/signup">Sign Up</Link>
+                </p>
+            ) : (
+                <p>
+                    Have an account already? <Link to="/login">Login</Link>
+                </p>
+            )}
         </div>
     )
 }

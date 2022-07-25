@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function Nav({carts}) {
+export default function Nav({ carts, isLogin }) {
     const total = carts.reduce((acc, cur) => {
         acc += cur.amount
         return acc
@@ -9,7 +9,7 @@ export default function Nav({carts}) {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <div className="w-1/12">
-            <div className="fixed flex flex-col items-start inset-y-5 gap-y-8 p-2 w-10 rounded-lg bg-blue-100 ">
+            <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 w-10 rounded-lg bg-blue-100 ">
                 <div className="relative">
                     <img
                         src={isOpen ? 'icons/close.svg' : 'icons/menu.svg'}
@@ -25,7 +25,7 @@ export default function Nav({carts}) {
                 <div className="relative md:hidden">
                     <img src="/icons/bag-handle.svg" />
                     <div className="absolute top-4 -right-1 w-[14px] h-[14px] text-xs text-center rounded-full bg-white">
-                        {total}
+                        {isLogin ? total : 0}
                     </div>
                 </div>
                 <img className="mt-auto" src="/icons/logout.svg" />

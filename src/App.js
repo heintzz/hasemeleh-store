@@ -6,6 +6,7 @@ import Nav from './components/Nav'
 import ViewProduct from './components/ViewProduct'
 import About from './components/About'
 import Login from './components/Login'
+import Signup from './components/Signup'
 import { db } from './config/firebase-config.js'
 import {
     doc,
@@ -17,13 +18,14 @@ import {
     query,
     orderBy,
 } from 'firebase/firestore'
-import Signup from './components/Signup'
 
 export default function App() {
     // eslint-disable-next-line
     const [items, setItems] = useState([])
     const [carts, setCarts] = useState([])
     const [loading, setLoading] = useState(true)
+    const [isLogin, setIsLogin] = useState(false)
+    const [userID, setUserID] = useState('')
 
     const productsRef = query(collection(db, 'products'), orderBy('title'))
     const cartsRef = collection(db, 'carts')
@@ -54,18 +56,22 @@ export default function App() {
     }, [])
 
     const addToCart = async (itemID) => {
-        const findItem = carts.find((cart) => cart.id === itemID)
-        if (findItem) {
-            increaseHandler(itemID)
-        } else {
-            const item = items.find((item) => item.id === itemID)
+        if (isLogin) {
+            const findItem = carts.find((cart) => cart.id === itemID)
+            if (findItem) {
+                increaseHandler(itemID)
+            } else {
+                const item = items.find((item) => item.id === itemID)
 
-            try {
-                await addDoc(cartsRef, item)
-                setCarts([...carts, item])
-            } catch (e) {
-                console.error('Error adding document: ', e)
+                try {
+                    await addDoc(cartsRef, item)
+                    setCarts([...carts, item])
+                } catch (e) {
+                    console.error('Error adding document: ', e)
+                }
             }
+        } else {
+            console.log('login dulu')
         }
     }
 
@@ -116,19 +122,22 @@ export default function App() {
     return (
         <div className="bg-slate-100 min-h-screen">
             <div className="max-w-7xl mx-auto flex font-mono pl-5">
-                <Nav carts={carts} />
                 <Routes>
                     <Route
-                        path="/home"
+                        exact
+                        path={isLogin ? '/:userId' : '/'}
                         element={
                             <>
+                                <Nav carts={carts} isLogin={isLogin} />
                                 <ViewProduct
                                     addToCart={addToCart}
                                     items={items}
                                     loading={loading}
+                                    isLogin={isLogin}
                                 />
                                 <Cart
                                     carts={carts}
+                                    isLogin={isLogin}
                                     increaseHandler={increaseHandler}
                                     decreaseHandler={decreaseHandler}
                                 />
@@ -136,10 +145,25 @@ export default function App() {
                         }
                     />
                     <Route
-                        path="/about/:id"
-                        element={<About items={items} />}
+                        path="/about/:itemId"
+                        element={
+                            <>
+                                <Nav carts={carts} isLogin={isLogin} />
+                                <About items={items} userID={userID} />
+                            </>
+                        }
                     />
-                    <Route path="/" element={<Login />} />
+                    <Route
+                        path="/login"
+                        element={
+                            <Login
+                                isLogin={isLogin}
+                                setIsLogin={setIsLogin}
+                                userID={userID}
+                                setUserID={setUserID}
+                            />
+                        }
+                    />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>
             </div>
