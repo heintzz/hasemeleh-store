@@ -15,7 +15,7 @@ export default function Cart({
     return (
         <div className="hidden md:display-block md:w-4/12 md:flex md:flex-col mt-5 pr-5">
             <h2 className="font-semibold">Cart</h2>
-            {carts && isLogin ? (
+            {(carts ? carts.length : carts) && isLogin ? (
                 <div className="my-5">
                     {carts.map((cart) => {
                         const { title, price, img, id, amount } = cart

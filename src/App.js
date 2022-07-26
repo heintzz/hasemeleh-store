@@ -102,16 +102,17 @@ export default function App() {
 
     const decreaseHandler = async (cartID) => {
         const cart = carts.find((cart) => cart.id === cartID)
-        const cartindex = carts.indexOf(cart)
+        const cartIndex = carts.indexOf(cart)
 
         const updatedCart = { ...cart, amount: cart.amount - 1 }
         const updatedCarts = carts.filter((cart) => cart.id !== cartID)
-        updatedCarts.splice(cartindex, 0, updatedCart)
+        updatedCarts.splice(cartIndex, 0, updatedCart)
 
         const data = await getDocs(usersRef)
         const user = data.docs.find((doc) => doc.data().userID === userID)
         const updatedRef = doc(db, 'users', user.id)
 
+        console.log(cart.amount - 1)
         // removing cart from the list when its amount is zero
         if (cart.amount - 1) {
             await updateDoc(updatedRef, {
@@ -120,10 +121,12 @@ export default function App() {
 
             setCarts(updatedCarts)
         } else {
-            updatedCarts.splice(cartindex, 1)
+            updatedCarts.splice(cartIndex, 1)
             await updateDoc(updatedRef, {
                 carts: updatedCarts,
             })
+
+            setCarts(updatedCarts)
         }
     }
 
