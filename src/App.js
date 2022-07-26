@@ -41,8 +41,19 @@ export default function App() {
         }
 
         getProducts()
+        if (
+            parseInt(window.localStorage.getItem('time')) + 3600000 <
+            Date.parse(new Date())
+        ) {
+            window.localStorage.setItem('isLogin', false)
+            window.localStorage.removeItem('id')
+            window.localStorage.removeItem('time')
+        }
         setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
+        window.localStorage.setItem('time', Date.parse(new Date()))
     }, [])
+
+    console.log(Date.parse(new Date()))
 
     useEffect(() => {
         const getCarts = async () => {

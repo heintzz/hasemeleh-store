@@ -9,7 +9,7 @@ export default function Cart({
     const finalPrice = carts?.reduce((acc, cur) => {
         acc += cur.price * cur.amount
         return acc
-    }, 0)
+    }, null)
 
     // const balance = 5000
     return (
@@ -62,13 +62,11 @@ export default function Cart({
                 <p className="mt-2">No Item</p>
             )}
 
-            {finalPrice ? (
+            {finalPrice && isLogin && (
                 <button className="flex p-2 gap-x-3 bg-blue-100 w-fit">
                     <img src="./icons/bag-handle.svg" />
                     <p>{`$ ${finalPrice.toFixed(2)}`}</p>
                 </button>
-            ) : (
-                ''
             )}
 
             {/* <div>

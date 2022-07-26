@@ -27,6 +27,8 @@ export default function Authentication({
                         const user = userCredential.user.uid
                         window.localStorage.setItem('isLogin', true)
                         window.localStorage.setItem('id', user)
+                        window.localStorage.setItem('time', Date.parse(new Date ()))
+
                         setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
                     })
                     .catch((err) => {
