@@ -10,16 +10,12 @@ import Signup from './components/Signup'
 import { db } from './config/firebase-config.js'
 import {
     doc,
-    addDoc,
     collection,
     getDocs,
-    setDoc,
-    deleteDoc,
     query,
     orderBy,
     updateDoc,
 } from 'firebase/firestore'
-import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers'
 
 export default function App() {
     // eslint-disable-next-line
@@ -30,7 +26,6 @@ export default function App() {
     const userID = window.localStorage.getItem('id')
 
     const productsRef = query(collection(db, 'products'), orderBy('title'))
-    const cartsRef = collection(db, 'carts')
     const usersRef = collection(db, 'users')
 
     useEffect(() => {
@@ -64,17 +59,26 @@ export default function App() {
 
     const addToCart = async (itemID) => {
         if (isLogin) {
-            const item = items.find((item) => item.id === itemID)
-            const data = await getDocs(usersRef)
-            const user = data.docs.find((doc) => doc.data().userID === userID)
+            const findItem = carts
+                ? carts.find((cart) => cart.id === itemID)
+                : false
+            if (findItem) {
+                increaseHandler(itemID)
+            } else {
+                const item = items.find((item) => item.id === itemID)
+                const data = await getDocs(usersRef)
+                const user = data.docs.find(
+                    (doc) => doc.data().userID === userID
+                )
 
-            const updatedRef = doc(db, 'users', user.id)
+                const updatedRef = doc(db, 'users', user.id)
 
-            setCarts(carts ? [...carts, item] : [item])
+                setCarts(carts ? [...carts, item] : [item])
 
-            await updateDoc(updatedRef, {
-                carts: carts ? [...carts, item] : [item],
-            })
+                await updateDoc(updatedRef, {
+                    carts: carts ? [...carts, item] : [item],
+                })
+            }
         } else {
             console.log('login dulu')
         }
@@ -112,7 +116,6 @@ export default function App() {
         const user = data.docs.find((doc) => doc.data().userID === userID)
         const updatedRef = doc(db, 'users', user.id)
 
-        console.log(cart.amount - 1)
         // removing cart from the list when its amount is zero
         if (cart.amount - 1) {
             await updateDoc(updatedRef, {
