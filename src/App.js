@@ -167,6 +167,7 @@ export default function App() {
                                 <Cart
                                     carts={carts}
                                     isLogin={isLogin}
+                                    loading={loading}
                                     increaseHandler={increaseHandler}
                                     decreaseHandler={decreaseHandler}
                                 />

@@ -1,8 +1,7 @@
-import { useParams } from 'react-router-dom'
-
 export default function Cart({
     carts,
     isLogin,
+    loading,
     increaseHandler,
     decreaseHandler,
 }) {
@@ -59,7 +58,7 @@ export default function Cart({
                     })}
                 </div>
             ) : (
-                <p className="mt-2">No Item</p>
+                <p className="mt-2">{loading ? 'loading kak...' : 'No Item'}</p>
             )}
 
             {finalPrice && isLogin && (
