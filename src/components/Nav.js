@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-export default function Nav({ carts, isLogin }) {
-    const total = carts.reduce((acc, cur) => {
+export default function Nav({ carts, isLogin, setIsLogin }) {
+    const total = carts?.reduce((acc, cur) => {
         acc += cur.amount
         return acc
     }, 0)
@@ -28,7 +29,21 @@ export default function Nav({ carts, isLogin }) {
                         {isLogin ? total : 0}
                     </div>
                 </div>
-                <img className="mt-auto" src="/icons/logout.svg" />
+                <Link to="/login" className="mt-auto">
+                    <img
+                        src="/icons/logout.svg"
+                        className="mt-auto"
+                        onClick={() => {
+                            window.localStorage.setItem('isLogin', false)
+                            window.localStorage.removeItem('id')
+                            setIsLogin(
+                                JSON.parse(
+                                    window.localStorage.getItem('isLogin')
+                                )
+                            )
+                        }}
+                    />
+                </Link>
             </div>
         </div>
     )

@@ -1,13 +1,11 @@
 import React from 'react'
 import Authentication from './Authentication'
 
-export default function Login({ isLogin, setIsLogin, userID, setUserID }) {
+export default function Login({ isLogin, setIsLogin}) {
     return (
         <Authentication
             isLogin={isLogin}
             setIsLogin={setIsLogin}
-            userID={userID}
-            setUserID={setUserID}
             authType="Login"
         />
     )

@@ -18,7 +18,7 @@ export default function Item({ item, addToCart, isLogin }) {
             </div>
             <div className="flex justify-between items-center px-2">
                 <p>{`$ ${price}`}</p>
-                <Link to={isLogin ? '/' : '/login'} onClick={() => addToCart(id)}>
+                <Link to={isLogin ? '' : '/login'} onClick={() => addToCart(id)}>
                     <img src="./icons/bag-add.svg" />
                 </Link>
             </div>

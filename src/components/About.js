@@ -8,7 +8,7 @@ export default function About({ items, userID }) {
 
     return items.length ? (
         <div className="min-w-[300px] py-[26px] ml-10 pr-5 sm:ml-0">
-            <Link to={`/${userID}`}>
+            <Link to={'/'}>
                 <img src="/icons/back.svg" className="inline-block w-5" />
                 <span> back </span>
             </Link>

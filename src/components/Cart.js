@@ -6,8 +6,7 @@ export default function Cart({
     increaseHandler,
     decreaseHandler,
 }) {
-    const { userId } = useParams()
-    const finalPrice = carts.reduce((acc, cur) => {
+    const finalPrice = carts?.reduce((acc, cur) => {
         acc += cur.price * cur.amount
         return acc
     }, 0)
@@ -16,7 +15,7 @@ export default function Cart({
     return (
         <div className="hidden md:display-block md:w-4/12 md:flex md:flex-col mt-5 pr-5">
             <h2 className="font-semibold">Cart</h2>
-            {carts.length === 0 || isLogin ? (
+            {carts && isLogin ? (
                 <div className="my-5">
                     {carts.map((cart) => {
                         const { title, price, img, id, amount } = cart
@@ -63,12 +62,15 @@ export default function Cart({
                 <p className="mt-2">No Item</p>
             )}
 
-            {carts.length > 0 && isLogin && (
+            {finalPrice ? (
                 <button className="flex p-2 gap-x-3 bg-blue-100 w-fit">
                     <img src="./icons/bag-handle.svg" />
                     <p>{`$ ${finalPrice.toFixed(2)}`}</p>
                 </button>
+            ) : (
+                ''
             )}
+
             {/* <div>
                 <h1>Your Balance</h1>
                 <p>{`$ ${balance}`}</p>

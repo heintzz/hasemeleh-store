@@ -17,21 +17,18 @@ import {
     deleteDoc,
     query,
     orderBy,
-    updateDoc,
 } from 'firebase/firestore'
-import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers'
 
 export default function App() {
     // eslint-disable-next-line
     const [items, setItems] = useState([])
     const [carts, setCarts] = useState([])
     const [loading, setLoading] = useState(true)
-    const [isLogin, setIsLogin] = useState()
-    const userID = window.localStorage.getItem('id')
+    const [isLogin, setIsLogin] = useState(false)
+    const [userID, setUserID] = useState('')
 
     const productsRef = query(collection(db, 'products'), orderBy('title'))
     const cartsRef = collection(db, 'carts')
-    const usersRef = collection(db, 'users')
 
     useEffect(() => {
         const getProducts = async () => {
@@ -45,36 +42,34 @@ export default function App() {
             )
         }
 
-        getProducts()
-        setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
-    }, [])
-
-    useEffect(() => {
         const getCarts = async () => {
-            const data = await getDocs(usersRef)
-            const user = data.docs.find(
-                (doc) => doc.data().userID === userID
-            ).id
-            const carts = data.docs.find((doc) => doc.id === user)
-            setCarts(carts.data().carts)
+            const data = await getDocs(cartsRef)
+            setCarts(
+                data.docs.map((doc) => ({
+                    ...doc.data(),
+                }))
+            )
         }
 
+        getProducts()
         getCarts()
-    }, [userID])
+    }, [])
 
     const addToCart = async (itemID) => {
         if (isLogin) {
-            const item = items.find((item) => item.id === itemID)
-            const data = await getDocs(usersRef)
-            const user = data.docs.find((doc) => doc.data().userID === userID)
+            const findItem = carts.find((cart) => cart.id === itemID)
+            if (findItem) {
+                increaseHandler(itemID)
+            } else {
+                const item = items.find((item) => item.id === itemID)
 
-            const updatedRef = doc(db, 'users', user.id)
-
-            setCarts(carts ? [...carts, item] : [item])
-
-            await updateDoc(updatedRef, {
-                carts: carts ? [...carts, item] : [item],
-            })
+                try {
+                    await addDoc(cartsRef, item)
+                    setCarts([...carts, item])
+                } catch (e) {
+                    console.error('Error adding document: ', e)
+                }
+            }
         } else {
             console.log('login dulu')
         }
@@ -88,15 +83,16 @@ export default function App() {
         const updatedCarts = carts.filter((cart) => cart.id !== cartID)
         updatedCarts.splice(cartIndex, 0, updatedCart)
 
-        // get reference
-        const data = await getDocs(usersRef)
-        const user = data.docs.find((doc) => doc.data().userID === userID)
-        const updatedRef = doc(db, 'users', user.id)
+        setCarts([...updatedCarts])
 
-        // update state and doc
-        setCarts(updatedCarts)
-        await updateDoc(updatedRef, {
-            carts: updatedCarts,
+        const data = await getDocs(cartsRef)
+        const docID = data.docs.find((item) => item.data().id === cartID).id
+        console.log(docID)
+        const updatedRef = doc(db, 'carts', docID)
+
+        await setDoc(updatedRef, {
+            ...cart,
+            amount: cart.amount + 1,
         })
     }
 
@@ -108,22 +104,19 @@ export default function App() {
         const updatedCarts = carts.filter((cart) => cart.id !== cartID)
         updatedCarts.splice(cartindex, 0, updatedCart)
 
-        const data = await getDocs(usersRef)
-        const user = data.docs.find((doc) => doc.data().userID === userID)
-        const updatedRef = doc(db, 'users', user.id)
+        const data = await getDocs(cartsRef)
+        const docID = data.docs.find((item) => item.data().id === cartID).id
+        const updatedRef = doc(db, 'carts', docID)
 
-        // removing cart from the list when its amount is zero
         if (cart.amount - 1) {
-            await updateDoc(updatedRef, {
-                carts: updatedCarts,
+            await setDoc(updatedRef, {
+                ...cart,
+                amount: cart.amount - 1,
             })
-
-            setCarts(updatedCarts)
+            setCarts([...updatedCarts])
         } else {
-            updatedCarts.splice(cartindex, 1)
-            await updateDoc(updatedRef, {
-                carts: updatedCarts,
-            })
+            await deleteDoc(doc(db, 'carts', docID))
+            setCarts([...carts.filter((cart) => cart.id !== cartID)])
         }
     }
 
@@ -133,14 +126,10 @@ export default function App() {
                 <Routes>
                     <Route
                         exact
-                        path="/"
+                        path={isLogin ? '/:userId' : '/'}
                         element={
                             <>
-                                <Nav
-                                    carts={carts}
-                                    isLogin={isLogin}
-                                    setIsLogin={setIsLogin}
-                                />
+                                <Nav carts={carts} isLogin={isLogin} />
                                 <ViewProduct
                                     addToCart={addToCart}
                                     items={items}
@@ -160,11 +149,7 @@ export default function App() {
                         path="/about/:itemId"
                         element={
                             <>
-                                <Nav
-                                    carts={carts}
-                                    isLogin={isLogin}
-                                    setIsLogin={setIsLogin}
-                                />
+                                <Nav carts={carts} isLogin={isLogin} />
                                 <About items={items} userID={userID} />
                             </>
                         }
@@ -172,7 +157,12 @@ export default function App() {
                     <Route
                         path="/login"
                         element={
-                            <Login isLogin={isLogin} setIsLogin={setIsLogin} />
+                            <Login
+                                isLogin={isLogin}
+                                setIsLogin={setIsLogin}
+                                userID={userID}
+                                setUserID={setUserID}
+                            />
                         }
                     />
                     <Route path="/signup" element={<Signup />} />

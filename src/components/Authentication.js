@@ -11,11 +11,8 @@ export default function Authentication({
     authType,
     isLogin,
     setIsLogin,
-    userID,
-    setUserID,
 }) {
-    const path =
-        authType === 'Login' ? (isLogin ? `/${userID}` : '/login') : '/login'
+    const path = authType === 'Login' ? (isLogin ? '/' : '/login') : '/login'
     const usersRef = collection(db, 'users')
 
     const authButton = useRef(null)
@@ -28,9 +25,9 @@ export default function Authentication({
                 signInWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         const user = userCredential.user.uid
-                        setIsLogin(true)
-                        setUserID(user)
-                        // setTimeout(() => setIsLogin(false))
+                        window.localStorage.setItem('isLogin', true)
+                        window.localStorage.setItem('id', user)
+                        setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
                     })
                     .catch((err) => {
                         console.log(err.message)
