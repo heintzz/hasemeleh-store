@@ -53,13 +53,21 @@ export default function Authentication({
         <div className="h-screen w-screen flex flex-col gap-y-5 items-center justify-center">
             <form className="flex flex-col" ref={authButton}>
                 <label htmlFor="email">Email: </label>
-                <input type="email" id="email" name="email" />
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="rounded-lg pl-2"
+                    placeholder="hash@gmail.com"
+                />
                 <label htmlFor="password">Password</label>
                 <input
                     type="password"
                     id="password"
                     name="password"
                     autoComplete="on"
+                    className="rounded-lg pl-2"
+                    placeholder="*****"
                 />
                 <Link
                     to={path}

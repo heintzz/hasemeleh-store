@@ -15,7 +15,7 @@ export default function Cart({
     // const balance = 5000
     return (
         <div className="hidden md:display-block md:w-4/12 md:flex md:flex-col mt-5 ml-5">
-            <h2 className="font-semibold">Cart</h2>
+            <h2>Cart</h2>
             {(carts ? carts.length : carts) && isLogin ? (
                 <div className="my-5">
                     {carts.map((cart) => {
@@ -23,7 +23,7 @@ export default function Cart({
                         const itemsPrice = (price * amount).toFixed(2)
                         return (
                             <div
-                                className="flex bg-blue-200 items-center py-2 gap-x-5 mb-5 last:mb-0 h-24 rounded-lg"
+                                className="flex bg-blue-100 items-center py-2 gap-x-5 mb-5 last:mb-0 h-24 rounded-lg"
                                 key={id}
                             >
                                 <img
@@ -66,7 +66,7 @@ export default function Cart({
             )}
 
             {finalPrice && isLogin && (
-                <button className="flex p-2 gap-x-3 bg-blue-100 w-fit">
+                <button className="flex p-2 gap-x-3 bg-blue-100 w-fit rounded-lg">
                     <img src="./icons/bag-handle.svg" />
                     <p>{`$ ${finalPrice.toFixed(2)}`}</p>
                 </button>

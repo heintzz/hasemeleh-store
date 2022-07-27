@@ -5,7 +5,7 @@ import Title from './Title'
 
 const Description = () => {
     return (
-        <div className="mx-2">
+        <div className="mx-2 animate-pulse">
             <Title />
             <Series />
             <Price />

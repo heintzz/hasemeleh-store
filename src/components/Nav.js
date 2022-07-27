@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Nav({ carts, isLogin, setIsLogin }) {
-    const total = carts?.reduce((acc, cur) => {
-        acc += cur.amount
-        return acc
-    }, 0)
+export default function Nav({ carts, setIsLogin }) {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const info = carts?.reduce(
+        (acc, cur) => {
+            acc.total += cur.amount
+            acc.price += cur.price * cur.amount
+            return acc
+        },
+        { total: 0, price: 0 }
+    )
     // eslint-disable-next-line
     const [isOpen, setIsOpen] = useState(false)
     return (
@@ -50,10 +55,13 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                     className="hover:cursor-pointer"
                 />
                 <div className="relative md:hidden">
-                    <img src="/icons/bag-handle.svg" />
+                    <img
+                        src="/icons/bag-handle.svg"
+                        onClick={() => setIsModalOpen(true)}
+                    />
                     {!carts && (
                         <div className="absolute top-4 -right-1 w-3 h-3 text-[8px] text-center rounded-lg bg-red-600 text-white">
-                            {total}
+                            {info.total}
                         </div>
                     )}
                 </div>
@@ -72,6 +80,40 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                         }}
                     />
                 </Link>
+            </div>
+            <div
+                className={`${
+                    isModalOpen ? 'flex' : 'hidden'
+                } fixed justify-center sm:items-center bg-slate-200 opacity-80 left-0 w-full h-full`}
+            >
+                <div className="relative w-64 h-96 md:w-96 mt-5 sm:mt-0 bg-white opacity-100 rounded-2xl overflow-scroll">
+                    <img
+                        src="/icons/close-white.svg"
+                        className="absolute top-3 right-3 bg-red-600 w-5 rounded-full text-center"
+                        onClick={() => setIsModalOpen(false)}
+                    />
+                    {carts.map((cart) => (
+                        <div className="pl-2 pt-2 flex">
+                            <img src={cart.img} className="w-14" />
+                            <div className="flex flex-col text-xs py-2 ml-5">
+                                <h4 className="mb-3">{cart.title}</h4>
+                                <div className="flex items-center justify-between">
+                                    <h5>{cart.price}</h5>
+                                    <div className="my-1 ml-5">
+                                        <button className="px-2 mr-1 rounded-lg bg-black text-white">
+                                            -
+                                        </button>
+                                        <span>{cart.amount}</span>
+                                        <button className="px-2 ml-1 rounded-lg bg-black text-white">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className="w-fit p-2 rounded-lg mx-4 mt-5 bg-red-200">{`$ ${info.price}`}</div>
+                </div>
             </div>
         </div>
     )

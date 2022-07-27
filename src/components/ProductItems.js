@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Item from './Item'
 
 export default function ProductItems({ addToCart, isLogin, items, keyword }) {
@@ -22,7 +23,21 @@ export default function ProductItems({ addToCart, isLogin, items, keyword }) {
                         )
                     })
                 ) : (
-                    <h2>barangnya kaga ada</h2>
+                    <div className="sm:mx-auto">
+                        <img
+                            src="/icons/not-found.svg"
+                            alt=""
+                            srcset=""
+                            className="w-40 mb-10"
+                        />
+                        <div className="mb-5">Item not found...</div>
+                        <button
+                            className="bg-red-300 w-fit py-1 px-2 rounded-xl"
+                            onClick={() => window.location.reload()}
+                        >
+                            Back
+                        </button>
+                    </div>
                 )
             ) : (
                 items.map((item) => {
