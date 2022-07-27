@@ -12,7 +12,7 @@
 /build
 
 # firebase-config
-/src/config
+/src/apikey.js
 
 # misc
 .DS_Store
