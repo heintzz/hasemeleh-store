@@ -53,7 +53,7 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                     <img src="/icons/bag-handle.svg" />
                     {isLogin && (
                         <div className="absolute top-4 -right-1 w-[14px] h-[14px] text-xs text-center rounded-full bg-white">
-                            total
+                            {total}
                         </div>
                     )}
                 </div>
