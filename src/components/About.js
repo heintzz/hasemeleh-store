@@ -7,9 +7,24 @@ export default function About({ items }) {
         : {}
 
     return items.length ? (
-        <div className="min-w-[300px] py-[26px] ml-10 pr-5 md:ml-0">
-            <Link to={'/'}>
-                <img src="/icons/back.svg" className="inline-block w-5" />
+        <div className="min-w-[300px] py-[27px] ml-10 pr-5">
+            <Link to={'/'} className="flex items-center gap-x-2">
+                <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="inline w-5"
+                >
+                    <path
+                        d="M15.375 5.25L8.625 12L15.375 18.75"
+                        stroke="#1A1F16"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
                 <span> back </span>
             </Link>
             <div className="flex flex-col sm:flex-reverse mt-5">
