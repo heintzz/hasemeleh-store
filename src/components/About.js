@@ -7,7 +7,7 @@ export default function About({ items }) {
         : {}
 
     return items.length ? (
-        <div className="min-w-[300px] py-[27px] ml-10 pr-5">
+        <div className="sm:max-w-md md:max-w-4xl mt-[26px] ml-10">
             <Link to={'/'} className="flex items-center gap-x-2">
                 <svg
                     width="24"
@@ -28,7 +28,7 @@ export default function About({ items }) {
                 <span> back </span>
             </Link>
             <div className="flex flex-col sm:flex-reverse mt-5">
-                <div className="flex mb-10 gap-x-2 sm:gap-x-8">
+                <div className="flex mb-10 gap-x-2 max-w-md sm:gap-x-8">
                     <div className="hidden sm:flex flex-col w-12 gap-y-5 ">
                         <img className="bg-red-200 rounded-lg" src={img} />
                         <img className="bg-red-200 rounded-lg" src={img} />
@@ -36,12 +36,16 @@ export default function About({ items }) {
                     </div>
                     <img
                         src={img}
-                        className="bg-red-200 rounded-lg object-contain"
+                        className="bg-red-200 rounded-lg object-contain w-50 sm:w-8/12"
                     />
                 </div>
-                <div className="max-w-lg">
-                    <h1 className="text-2xl font-semibold">{title}</h1>
-                    <h3 className="text-sm text-slate-400">{type}</h3>
+                <div>
+                    <h1 className="text:sm md:text-2xl font-semibold">
+                        {title}
+                    </h1>
+                    <h3 className="text:xs md:text-sm text-slate-400">
+                        {type}
+                    </h3>
                     <p className="my-5">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Iure esse ducimus impedit, omnis nam facere sequi
@@ -57,6 +61,6 @@ export default function About({ items }) {
             </div>
         </div>
     ) : (
-        <h1 className="mt-[26px] ml-10 sm:ml-0">loading kak...</h1>
+        <h1 className="mt-[26px] ml-10">loading kak...</h1>
     )
 }

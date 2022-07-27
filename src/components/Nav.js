@@ -10,7 +10,7 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <div className="w-10">
-            <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 w-10 rounded-lg bg-blue-100">
+            <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 rounded-xl bg-blue-100">
                 <div className="relative hover:cursor-pointer">
                     {isOpen ? (
                         <svg
