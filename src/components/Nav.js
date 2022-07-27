@@ -51,9 +51,11 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                 />
                 <div className="relative md:hidden">
                     <img src="/icons/bag-handle.svg" />
-                    <div className="absolute top-4 -right-1 w-[14px] h-[14px] text-xs text-center rounded-full bg-white">
-                        {isLogin ? total : 0}
-                    </div>
+                    {isLogin && (
+                        <div className="absolute top-4 -right-1 w-[14px] h-[14px] text-xs text-center rounded-full bg-white">
+                            total
+                        </div>
+                    )}
                 </div>
                 <Link to="/login" className="mt-auto">
                     <img

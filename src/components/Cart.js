@@ -12,7 +12,7 @@ export default function Cart({
 
     // const balance = 5000
     return (
-        <div className="hidden md:display-block md:w-4/12 md:flex md:flex-col mt-5 pr-5">
+        <div className="hidden md:display-block md:w-4/12 md:flex md:flex-col mt-5">
             <h2 className="font-semibold">Cart</h2>
             {(carts ? carts.length : carts) && isLogin ? (
                 <div className="my-5">

@@ -1,20 +1,20 @@
 import { Link, useParams } from 'react-router-dom'
 
-export default function About({ items, userID }) {
+export default function About({ items }) {
     const { itemId } = useParams()
     const { img, title, type, price } = items.length
         ? items.find((item) => item.id === itemId)
         : {}
 
     return items.length ? (
-        <div className="min-w-[300px] py-[26px] ml-10 pr-5 sm:ml-0">
+        <div className="min-w-[300px] py-[26px] ml-10 pr-5 md:ml-0">
             <Link to={'/'}>
                 <img src="/icons/back.svg" className="inline-block w-5" />
                 <span> back </span>
             </Link>
             <div className="flex flex-col sm:flex-reverse mt-5">
                 <div className="flex mb-10 gap-x-2 sm:gap-x-8">
-                    <div className="flex flex-col w-12 gap-y-5">
+                    <div className="hidden sm:flex flex-col w-12 gap-y-5 ">
                         <img className="bg-red-200 rounded-lg" src={img} />
                         <img className="bg-red-200 rounded-lg" src={img} />
                         <img className="bg-red-200 rounded-lg" src={img} />
@@ -42,6 +42,6 @@ export default function About({ items, userID }) {
             </div>
         </div>
     ) : (
-        <h1 className="mt-[26px]">loading kak...</h1>
+        <h1 className="mt-[26px] ml-10 sm:ml-0">loading kak...</h1>
     )
 }

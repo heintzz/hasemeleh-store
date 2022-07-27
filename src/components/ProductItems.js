@@ -8,7 +8,7 @@ export default function ProductItems({ addToCart, isLogin, items, keyword }) {
     )
 
     return (
-        <div className="flex flex-wrap mt-5">
+        <div className="flex flex-wrap mt-5 md:pr-5">
             {keyword ? (
                 filteredItems.length ? (
                     filteredItems.map((item) => {

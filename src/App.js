@@ -16,6 +16,7 @@ import {
     orderBy,
     updateDoc,
 } from 'firebase/firestore'
+import './App.css'
 
 export default function App() {
     // eslint-disable-next-line
@@ -146,7 +147,7 @@ export default function App() {
 
     return (
         <div className="bg-slate-100 min-h-screen">
-            <div className="max-w-7xl mx-auto flex font-mono pl-5">
+            <div className="max-w-7xl mx-auto flex font-mono pl-3">
                 <Routes>
                     <Route
                         exact

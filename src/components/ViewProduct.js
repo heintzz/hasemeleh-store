@@ -18,14 +18,14 @@ export default function ViewProduct({ addToCart, items, loading, isLogin }) {
     }
 
     return (
-        <div className="w-10/12 md:w-7/12 my-5 px-5 ">
+        <div className="w-10/12 md:w-7/12 my-5 ml-2 sm:ml-0">
             <SearchBar
                 onChangeHandler={onChangeHandler}
                 searchKey={searchKey}
                 enterHandler={enterHandler}
             />
             {loading ? (
-                <h1 className="mt-5 pl-6">loading kak...</h1>
+                <h1 className="mt-5 ml-5">loading kak...</h1>
             ) : (
                 <ProductItems
                     addToCart={addToCart}
