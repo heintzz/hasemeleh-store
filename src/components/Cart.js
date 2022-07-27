@@ -1,3 +1,5 @@
+import SkeletonCarts from '../skeletons/SkeletonCarts'
+
 export default function Cart({
     carts,
     isLogin,
@@ -58,7 +60,9 @@ export default function Cart({
                     })}
                 </div>
             ) : (
-                <p className="mt-2">{loading ? 'loading kak...' : 'No Item'}</p>
+                <p className="mt-2">
+                    {loading ? <SkeletonCarts /> : 'No Item'}
+                </p>
             )}
 
             {finalPrice && isLogin && (

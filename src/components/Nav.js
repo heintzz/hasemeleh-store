@@ -51,7 +51,7 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                 />
                 <div className="relative md:hidden">
                     <img src="/icons/bag-handle.svg" />
-                    {carts.length !== 0 && (
+                    {!carts && (
                         <div className="absolute top-4 -right-1 w-3 h-3 text-[8px] text-center rounded-lg bg-red-600 text-white">
                             {total}
                         </div>

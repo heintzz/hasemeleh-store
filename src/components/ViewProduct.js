@@ -1,7 +1,7 @@
 import ProductItems from './ProductItems'
 import SearchBar from './SearchBar'
 import { useState } from 'react'
-import SkeletonComponent from '../skeletons/SkeletonComponent'
+import SkeletonProducts from '../skeletons/SkeletonProducts'
 
 export default function ViewProduct({ addToCart, items, loading, isLogin }) {
     const [searchKey, setSearchKey] = useState('')
@@ -26,7 +26,7 @@ export default function ViewProduct({ addToCart, items, loading, isLogin }) {
                 enterHandler={enterHandler}
             />
             {loading ? (
-                <SkeletonComponent />
+                <SkeletonProducts />
             ) : (
                 <ProductItems
                     addToCart={addToCart}
