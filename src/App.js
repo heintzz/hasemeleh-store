@@ -17,10 +17,11 @@ import {
     updateDoc,
 } from 'firebase/firestore'
 import './App.css'
+import Home from './components/Home'
 
 export default function App() {
     // eslint-disable-next-line
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState(null)
     const [carts, setCarts] = useState([])
     const [loading, setLoading] = useState(true)
     const [isLogin, setIsLogin] = useState()
@@ -53,8 +54,6 @@ export default function App() {
         setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
         window.localStorage.setItem('time', Date.parse(new Date()))
     }, [])
-
-    console.log(Date.parse(new Date()))
 
     useEffect(() => {
         const getCarts = async () => {
@@ -146,57 +145,54 @@ export default function App() {
     }
 
     return (
-        <div className="bg-slate-100 min-h-screen box-border">
-            <div className="max-w-7xl mx-auto flex font-mono px-5">
-                <Routes>
-                    <Route
-                        exact
-                        path="/"
-                        element={
-                            <>
-                                <Nav
-                                    carts={carts}
-                                    isLogin={isLogin}
-                                    setIsLogin={setIsLogin}
-                                />
-                                <ViewProduct
-                                    addToCart={addToCart}
-                                    items={items}
-                                    loading={loading}
-                                    isLogin={isLogin}
-                                />
-                                <Cart
-                                    carts={carts}
-                                    isLogin={isLogin}
-                                    loading={loading}
-                                    increaseHandler={increaseHandler}
-                                    decreaseHandler={decreaseHandler}
-                                />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/about/:itemId"
-                        element={
-                            <>
-                                <Nav
-                                    carts={carts}
-                                    isLogin={isLogin}
-                                    setIsLogin={setIsLogin}
-                                />
-                                <About items={items} userID={userID} />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/login"
-                        element={
-                            <Login isLogin={isLogin} setIsLogin={setIsLogin} />
-                        }
-                    />
-                    <Route path="/signup" element={<Signup />} />
-                </Routes>
-            </div>
-        </div>
+        <Home>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <>
+                            <Nav
+                                carts={carts}
+                                isLogin={isLogin}
+                                setIsLogin={setIsLogin}
+                            />
+                            <ViewProduct
+                                addToCart={addToCart}
+                                items={items}
+                                loading={loading}
+                                isLogin={isLogin}
+                            />
+                            <Cart
+                                carts={carts}
+                                isLogin={isLogin}
+                                loading={loading}
+                                increaseHandler={increaseHandler}
+                                decreaseHandler={decreaseHandler}
+                            />
+                        </>
+                    }
+                />
+                <Route
+                    path="/about/:itemId"
+                    element={
+                        <>
+                            <Nav
+                                carts={carts}
+                                isLogin={isLogin}
+                                setIsLogin={setIsLogin}
+                            />
+                            <About items={items} userID={userID} />
+                        </>
+                    }
+                />
+                <Route
+                    path="/login"
+                    element={
+                        <Login isLogin={isLogin} setIsLogin={setIsLogin} />
+                    }
+                />
+                <Route path="/signup" element={<Signup />} />
+            </Routes>
+        </Home>
     )
 }

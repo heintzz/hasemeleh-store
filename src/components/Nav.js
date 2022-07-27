@@ -8,6 +8,7 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
     }, 0)
     // eslint-disable-next-line
     const [isOpen, setIsOpen] = useState(false)
+    console.log(carts)
     return (
         <div className="w-10">
             <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 rounded-xl bg-blue-100">
@@ -38,9 +39,9 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                             <path
                                 d="M4.125 7.125H12H19.875M4.125 12H19.875M4.125 16.875H19.875"
                                 stroke="#1A1F16"
-                                stroke-width="2"
-                                stroke-miterlimit="10"
-                                stroke-linecap="round"
+                                strokeWidth="2"
+                                strokeMiterlimit="10"
+                                strokeLinecap="round"
                             />
                         </svg>
                     )}
@@ -51,7 +52,7 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                 />
                 <div className="relative md:hidden">
                     <img src="/icons/bag-handle.svg" />
-                    {isLogin && (
+                    {carts.length !== 0 && (
                         <div className="absolute top-4 -right-1 w-3 h-3 text-[8px] text-center rounded-lg bg-red-600 text-white">
                             {total}
                         </div>
