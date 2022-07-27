@@ -9,7 +9,7 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
     // eslint-disable-next-line
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <div className="w-1/12">
+        <div className="w-10">
             <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 w-10 rounded-lg bg-blue-100">
                 <div className="relative hover:cursor-pointer">
                     {isOpen ? (
@@ -52,7 +52,7 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
                 <div className="relative md:hidden">
                     <img src="/icons/bag-handle.svg" />
                     {isLogin && (
-                        <div className="absolute top-4 -right-1 w-[14px] h-[14px] text-xs text-center rounded-full bg-white">
+                        <div className="absolute top-4 -right-1 w-3 h-3 text-[8px] text-center rounded-lg bg-red-600 text-white">
                             {total}
                         </div>
                     )}

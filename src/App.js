@@ -147,7 +147,7 @@ export default function App() {
 
     return (
         <div className="bg-slate-100 min-h-screen">
-            <div className="max-w-7xl mx-auto flex font-mono pl-3">
+            <div className="max-w-7xl mx-auto flex font-mono pl-5">
                 <Routes>
                     <Route
                         exact
