@@ -21,7 +21,7 @@ import Home from './components/Home'
 
 export default function App() {
     // eslint-disable-next-line
-    const [items, setItems] = useState(null)
+    const [items, setItems] = useState([])
     const [carts, setCarts] = useState([])
     const [loading, setLoading] = useState(true)
     const [isLogin, setIsLogin] = useState()
