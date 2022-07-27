@@ -8,7 +8,6 @@ export default function Nav({ carts, isLogin, setIsLogin }) {
     }, 0)
     // eslint-disable-next-line
     const [isOpen, setIsOpen] = useState(false)
-    console.log(carts)
     return (
         <div className="w-10">
             <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 rounded-xl bg-blue-100">
