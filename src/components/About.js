@@ -7,7 +7,7 @@ export default function About({ items }) {
         : {}
 
     return items.length ? (
-        <div className="sm:max-w-md md:max-w-4xl mt-[26px] ml-10">
+        <div className="w-11/12 max-w-4xl mt-[26px] pl-10">
             <Link to={'/'} className="flex items-center gap-x-2">
                 <svg
                     width="24"
