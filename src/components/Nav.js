@@ -6,6 +6,7 @@ import whiteClose from '../icons/close-white.svg'
 import store from '../icons/store-front.svg'
 import bag from '../icons/bag-handle.svg'
 import logout from '../icons/logout.svg'
+import loginAdvice from '../icons/login-advice.svg'
 
 export default function Nav({
     carts,
@@ -17,7 +18,6 @@ export default function Nav({
     isModalOpen,
     setIsModalOpen,
 }) {
-    
     const [isOpen, setIsOpen] = useState(false)
     const info = carts?.reduce(
         (acc, cur) => {
@@ -106,7 +106,9 @@ export default function Nav({
                                         >
                                             -
                                         </button>
-                                        <div className='mx-1 w-2 text-center'>{cart.amount}</div>
+                                        <div className="mx-1 w-2 text-center">
+                                            {cart.amount}
+                                        </div>
                                         <button
                                             className="px-2 rounded-lg bg-black text-white"
                                             onClick={() =>
@@ -121,9 +123,27 @@ export default function Nav({
                         </div>
                     ))}
                     {info.price ? (
-                        <div className="w-fit p-2 rounded-lg mx-4 mt-5 bg-red-200">{`$ ${info.price}`}</div>
+                        <div className="w-fit p-2 rounded-lg mx-4 mt-5 mb-5 bg-red-200">{`$ ${info.price}`}</div>
+                    ) : isLogin ? (
+                        <p className="mx-4 mt-3">Cart is empty</p>
                     ) : (
-                        <p className="mx-4 mt-3">No item</p>
+                        <div className="mx-4 mt-3">
+                            <div>
+                                You should
+                                <Link to="/login">
+                                    <span className="text-blue-500 mx-1 underline">
+                                        login
+                                    </span>
+                                </Link>
+                                first
+                            </div>
+                            <img
+                                src={loginAdvice}
+                                alt="login"
+                                className="mt-14"
+                                draggable="false"
+                            />
+                        </div>
                     )}
                 </div>
             </div>

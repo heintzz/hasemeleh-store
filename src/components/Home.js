@@ -1,10 +1,9 @@
 import React from 'react'
 
 const Home = ({ children, isModalOpen }) => {
-    console.log(isModalOpen)
     return (
         <div
-            className={`bg-slate-100  ${
+            className={`bg-slate-100 ${
                 isModalOpen ? 'max-h-screen overflow-hidden' : 'min-h-screen'
             } box-border`}
         >

@@ -6,14 +6,13 @@ import {
     signInWithEmailAndPassword,
 } from 'firebase/auth'
 import { addDoc, collection } from 'firebase/firestore'
+import ErrorMessage from './ErrorMessage'
 
-export default function Authentication({
-    authType,
-    isLogin,
-    setIsLogin,
-}) {
-    const path = authType === 'Login' ? (isLogin ? '/' : '/login') : '/login'
+export default function Authentication({ authType, isLogin, setIsLogin }) {
+    const [errType, setErrType] = useState()
+    const [isSuccess, setIsSuccess] = useState(true)
     const usersRef = collection(db, 'users')
+    const path = authType === 'Login' ? (isLogin ? '/' : '/login') : '/login'
 
     const authButton = useRef(null)
     const onAuthentication = (e) => {
@@ -27,12 +26,22 @@ export default function Authentication({
                         const user = userCredential.user.uid
                         window.localStorage.setItem('isLogin', true)
                         window.localStorage.setItem('id', user)
-                        window.localStorage.setItem('time', Date.parse(new Date ()))
+                        window.localStorage.setItem(
+                            'time',
+                            Date.parse(new Date())
+                        )
 
-                        setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
+                        setIsLogin(
+                            JSON.parse(window.localStorage.getItem('isLogin'))
+                        )
                     })
                     .catch((err) => {
-                        console.log(err.message)
+                        console.log(err.code)
+                        setErrType(err.code)
+                        setIsSuccess(false)
+                        setTimeout(() => {
+                            setIsSuccess(true)
+                        }, 2000)
                     })
 
                 break
@@ -43,7 +52,12 @@ export default function Authentication({
                         await addDoc(usersRef, { userID: user, carts: [] })
                     })
                     .catch((err) => {
-                        console.log(err.message)
+                        console.log(err.code)
+                        setErrType(err.code)
+                        setIsSuccess(false)
+                        setTimeout(() => {
+                            setIsSuccess(true)
+                        }, 2000)
                     })
                 break
         }
@@ -51,8 +65,8 @@ export default function Authentication({
 
     return (
         <div className="h-screen w-screen flex flex-col gap-y-5 items-center justify-center">
-            <form className="flex flex-col" ref={authButton}>
-                <label htmlFor="email">Email: </label>
+            <form className="flex flex-col w-80" ref={authButton}>
+                <label htmlFor="email" className="my-3">Email: </label>
                 <input
                     type="email"
                     id="email"
@@ -60,7 +74,7 @@ export default function Authentication({
                     className="rounded-lg pl-2"
                     placeholder="hash@gmail.com"
                 />
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className="my-3">Password</label>
                 <input
                     type="password"
                     id="password"
@@ -69,8 +83,11 @@ export default function Authentication({
                     className="rounded-lg pl-2"
                     placeholder="*****"
                 />
+                {!isSuccess && (
+                    <ErrorMessage type={errType} authType={authType} />
+                )}
                 <Link
-                    to={path}
+                    to={!isSuccess ? path : ''}
                     type="submit"
                     onClick={onAuthentication}
                     className="bg-blue-400 text-white rounded-lg mt-5 px-2 w-fit place-self-end"
@@ -80,11 +97,11 @@ export default function Authentication({
             </form>
             {authType === 'Login' ? (
                 <p>
-                    Don't have an account? <Link to="/signup">Sign Up</Link>
+                    Don't have an account? <Link to="/signup" className="text-blue-500 underline">Sign Up</Link>
                 </p>
             ) : (
                 <p>
-                    Have an account already? <Link to="/login">Login</Link>
+                    Have an account already? <Link to="/login" className="text-blue-500 underline">Login</Link>
                 </p>
             )}
         </div>
