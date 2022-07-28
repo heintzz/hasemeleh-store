@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import Item from './Item'
+import notFound from '../icons/not-found.svg'
 
 export default function ProductItems({ addToCart, isLogin, items, keyword }) {
     const filteredItems = items.filter(
@@ -25,10 +25,9 @@ export default function ProductItems({ addToCart, isLogin, items, keyword }) {
                 ) : (
                     <div className="sm:mx-auto">
                         <img
-                            src="/icons/not-found.svg"
-                            alt=""
-                            srcset=""
-                            className="w-40 mb-10"
+                            src={notFound}
+                            alt="not found"
+                            className="w-40 mb-10 lg:w-64"
                         />
                         <div className="mb-5">Item not found...</div>
                         <button

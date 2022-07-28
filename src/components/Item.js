@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import addButton from '../icons/bag-add.svg'
 
 export default function Item({ item, addToCart, isLogin }) {
     const { img, title, price, series, id } = item
@@ -22,7 +23,11 @@ export default function Item({ item, addToCart, isLogin }) {
                     to={isLogin ? '' : '/login'}
                     onClick={() => addToCart(id)}
                 >
-                    <img src="./icons/bag-add.svg" className="w-5 sm:w-full" />
+                    <img
+                        src={addButton}
+                        alt="add button"
+                        className="w-5 sm:w-full"
+                    />
                 </Link>
             </div>
         </div>

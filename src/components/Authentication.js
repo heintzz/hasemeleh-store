@@ -40,7 +40,7 @@ export default function Authentication({
                 createUserWithEmailAndPassword(auth, email, password)
                     .then(async (userCredential) => {
                         const user = userCredential.user.uid
-                        await addDoc(usersRef, { userID: user })
+                        await addDoc(usersRef, { userID: user, carts: [] })
                     })
                     .catch((err) => {
                         console.log(err.message)

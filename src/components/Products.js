@@ -33,7 +33,7 @@ const Products = [
     },
     {
         id: 5,
-        img: '/products/headphones.png',
+        img: '/products/headphone.png',
         title: 'Sony ZX33OBT',
         type: 'Series 5 SE',
         price: 39.99,
@@ -49,7 +49,7 @@ const Products = [
     },
     {
         id: 7,
-        img: '/products/iphone-12-02.png',
+        img: '/products/macbook.png',
         title: 'Iphone 12',
         type: 'Series 5 SE',
         price: 529.99,

@@ -153,6 +153,7 @@ export default function App() {
                         <>
                             <Nav
                                 carts={carts}
+                                loading={loading}
                                 isLogin={isLogin}
                                 setIsLogin={setIsLogin}
                             />

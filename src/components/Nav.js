@@ -1,7 +1,14 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import open from '../icons/menu.svg'
+import close from '../icons/close.svg'
+import whiteClose from '../icons/close-white.svg'
+import store from '../icons/store-front.svg'
+import bag from '../icons/bag-handle.svg'
+import logout from '../icons/logout.svg'
 
-export default function Nav({ carts, setIsLogin }) {
+export default function Nav({ carts, loading, isLogin, setIsLogin }) {
+    const [isOpen, setIsOpen] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const info = carts?.reduce(
         (acc, cur) => {
@@ -9,65 +16,42 @@ export default function Nav({ carts, setIsLogin }) {
             acc.price += cur.price * cur.amount
             return acc
         },
-        { total: 0, price: 0 }
+        { total: null, price: null }
     )
-    // eslint-disable-next-line
-    const [isOpen, setIsOpen] = useState(false)
+
     return (
         <div className="w-10">
             <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 rounded-xl bg-blue-100">
                 <div className="relative hover:cursor-pointer">
-                    {isOpen ? (
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            <path
-                                d="M13.5909 12L18.0441 7.54687C18.2554 7.3359 18.3743 7.04961 18.3745 6.75099C18.3748 6.45237 18.2564 6.16587 18.0455 5.95453C17.8345 5.74319 17.5482 5.62431 17.2496 5.62404C16.951 5.62378 16.6645 5.74215 16.4531 5.95312L12 10.4062L7.54687 5.95312C7.33553 5.74178 7.04888 5.62305 6.75 5.62305C6.45111 5.62305 6.16447 5.74178 5.95312 5.95312C5.74178 6.16447 5.62305 6.45111 5.62305 6.75C5.62305 7.04888 5.74178 7.33553 5.95312 7.54687L10.4062 12L5.95312 16.4531C5.74178 16.6645 5.62305 16.9511 5.62305 17.25C5.62305 17.5489 5.74178 17.8355 5.95312 18.0469C6.16447 18.2582 6.45111 18.3769 6.75 18.3769C7.04888 18.3769 7.33553 18.2582 7.54687 18.0469L12 13.5937L16.4531 18.0469C16.6645 18.2582 16.9511 18.3769 17.25 18.3769C17.5489 18.3769 17.8355 18.2582 18.0469 18.0469C18.2582 17.8355 18.3769 17.5489 18.3769 17.25C18.3769 16.9511 18.2582 16.6645 18.0469 16.4531L13.5909 12Z"
-                                fill="#1A1F16"
-                            />
-                        </svg>
-                    ) : (
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            onClick={() => setIsOpen(true)}
-                        >
-                            <path
-                                d="M4.125 7.125H12H19.875M4.125 12H19.875M4.125 16.875H19.875"
-                                stroke="#1A1F16"
-                                strokeWidth="2"
-                                strokeMiterlimit="10"
-                                strokeLinecap="round"
-                            />
-                        </svg>
-                    )}
+                    <img
+                        src={isOpen ? close : open}
+                        alt="open close button"
+                        onClick={() => setIsOpen((prev) => !prev)}
+                    />
                 </div>
                 <img
-                    src="/icons/store-front.svg"
+                    src={store}
+                    alt="store button"
                     className="hover:cursor-pointer"
                 />
-                <div className="relative md:hidden">
+                <div className="relative md:hidden hover:cursor-pointer">
                     <img
-                        src="/icons/bag-handle.svg"
+                        src={bag}
+                        alt="bag button"
                         onClick={() => setIsModalOpen(true)}
                     />
-                    {!carts && (
+                    {carts.length && isLogin && !loading ? (
                         <div className="absolute top-4 -right-1 w-3 h-3 text-[8px] text-center rounded-lg bg-red-600 text-white">
                             {info.total}
                         </div>
+                    ) : (
+                        ''
                     )}
                 </div>
                 <Link to="/login" className="mt-auto">
                     <img
-                        src="/icons/logout.svg"
+                        src={logout}
+                        alt="logout button"
                         className="mt-auto"
                         onClick={() => {
                             window.localStorage.setItem('isLogin', false)
@@ -86,18 +70,23 @@ export default function Nav({ carts, setIsLogin }) {
                     isModalOpen ? 'flex' : 'hidden'
                 } fixed justify-center sm:items-center bg-slate-200 opacity-80 left-0 w-full h-full`}
             >
-                <div className="relative w-64 h-96 md:w-96 mt-5 sm:mt-0 bg-white opacity-100 rounded-2xl overflow-scroll">
+                <div className="relative w-64 h-96 md:w-96 mt-5 sm:mt-0 bg-white opacity-100 rounded-2xl" >
                     <img
-                        src="/icons/close-white.svg"
-                        className="absolute top-3 right-3 bg-red-600 w-5 rounded-full text-center"
+                        src={whiteClose}
+                        alt="close button"
+                        className="absolute top-3 right-3 bg-red-600 w-5 rounded-full text-center hover:cursor-pointer"
                         onClick={() => setIsModalOpen(false)}
                     />
                     {carts.map((cart) => (
-                        <div className="pl-2 pt-2 flex">
-                            <img src={cart.img} className="w-14" />
+                        <div className="pl-2 pt-2 flex" key={cart.id}>
+                            <img
+                                src={cart.img}
+                                alt={cart.tile}
+                                className="w-14 object-contain"
+                            />
                             <div className="flex flex-col text-xs py-2 ml-5">
                                 <h4 className="mb-3">{cart.title}</h4>
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between w-full">
                                     <h5>{cart.price}</h5>
                                     <div className="my-1 ml-5">
                                         <button className="px-2 mr-1 rounded-lg bg-black text-white">

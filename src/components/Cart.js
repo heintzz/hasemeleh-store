@@ -1,4 +1,5 @@
-import SkeletonCarts from '../skeletons/SkeletonCarts'
+import SkeletonCarts from '../skeletons/Carts/SkeletonCarts'
+import bag from '../icons/bag-handle.svg'
 
 export default function Cart({
     carts,
@@ -12,7 +13,6 @@ export default function Cart({
         return acc
     }, null)
 
-    // const balance = 5000
     return (
         <div className="hidden md:display-block md:w-4/12 md:flex md:flex-col mt-5 ml-5">
             <h2>Cart</h2>
@@ -27,8 +27,9 @@ export default function Cart({
                                 key={id}
                             >
                                 <img
-                                    className="w-3/12 max-w-[80px] ml-3"
                                     src={img}
+                                    alt={`${title}`}
+                                    className="w-3/12 max-w-[80px] ml-3"
                                 />
                                 <div className="block text-sm w-8/12 mr-4">
                                     <h4>{title}</h4>
@@ -60,22 +61,17 @@ export default function Cart({
                     })}
                 </div>
             ) : (
-                <p className="mt-2">
+                <div className="mt-2">
                     {loading ? <SkeletonCarts /> : 'No Item'}
-                </p>
+                </div>
             )}
 
             {finalPrice && isLogin && (
                 <button className="flex p-2 gap-x-3 bg-blue-100 w-fit rounded-lg">
-                    <img src="./icons/bag-handle.svg" />
+                    <img src={bag} alt="bag handle icon" />
                     <p>{`$ ${finalPrice.toFixed(2)}`}</p>
                 </button>
             )}
-
-            {/* <div>
-                <h1>Your Balance</h1>
-                <p>{`$ ${balance}`}</p>
-            </div> */}
         </div>
     )
 }

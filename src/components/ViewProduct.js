@@ -1,7 +1,7 @@
 import ProductItems from './ProductItems'
 import SearchBar from './SearchBar'
 import { useState } from 'react'
-import SkeletonProducts from '../skeletons/SkeletonProducts'
+import SkeletonProducts from '../skeletons/Products/SkeletonProducts'
 
 export default function ViewProduct({ addToCart, items, loading, isLogin }) {
     const [searchKey, setSearchKey] = useState('')

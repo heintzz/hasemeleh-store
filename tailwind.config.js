@@ -8,7 +8,12 @@ module.exports = {
             xs: '430px',
             ...defaultTheme.screens,
         },
-        extend: {},
+        extend: {
+            backgroundColor: {
+                "modalBg": 'rgba(255, 255, 255, 0.2)',
+                "modalContent": 'rgba(255, 255, 255, 1)',
+            },
+        },
     },
     plugins: [
         // at very end
