@@ -1,13 +1,9 @@
-// eslint-disable-next-line
 import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Cart from './components/Cart'
 import Nav from './components/Nav'
-import ViewProduct from './components/ViewProduct'
 import About from './components/About'
-import Login from './components/Login'
-import Signup from './components/Signup'
-import { db } from './config/firebase-config.js'
+import Home from './components/Home'
+import Authentication from './components/Authentication'
 import {
     doc,
     collection,
@@ -16,22 +12,35 @@ import {
     orderBy,
     updateDoc,
 } from 'firebase/firestore'
+import { db } from './config/firebase-config.js'
 import './App.css'
-import Home from './components/Home'
+import Dashboard from './components/Dashboard'
 
 export default function App() {
-    // eslint-disable-next-line
     const [items, setItems] = useState([])
     const [carts, setCarts] = useState([])
     const [isLogin, setIsLogin] = useState()
     const [loading, setLoading] = useState(true)
     const [isModalOpen, setIsModalOpen] = useState(false)
+
     const userID = window.localStorage.getItem('id')
 
-    const productsRef = query(collection(db, 'products'), orderBy('title'))
     const usersRef = collection(db, 'users')
+    const productsRef = query(collection(db, 'products'), orderBy('price'))
 
     useEffect(() => {
+        const newDate = Date.parse(new Date())
+        const expired =
+            parseInt(window.localStorage.getItem('time')) + 3600000 < newDate
+
+        if (expired) {
+            window.localStorage.setItem('isLogin', false)
+            window.localStorage.removeItem('id')
+            window.localStorage.removeItem('time')
+        }
+        setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
+        window.localStorage.setItem('time', newDate)
+
         const getProducts = async () => {
             const data = await getDocs(productsRef)
             setLoading(false)
@@ -44,16 +53,6 @@ export default function App() {
         }
 
         getProducts()
-        if (
-            parseInt(window.localStorage.getItem('time')) + 3600000 <
-            Date.parse(new Date())
-        ) {
-            window.localStorage.setItem('isLogin', false)
-            window.localStorage.removeItem('id')
-            window.localStorage.removeItem('time')
-        }
-        setIsLogin(JSON.parse(window.localStorage.getItem('isLogin')))
-        window.localStorage.setItem('time', Date.parse(new Date()))
     }, [])
 
     useEffect(() => {
@@ -151,31 +150,18 @@ export default function App() {
                 <Route
                     path="/"
                     element={
-                        <>
-                            <Nav
-                                carts={carts}
-                                loading={loading}
-                                isLogin={isLogin}
-                                isModalOpen={isModalOpen}
-                                setIsModalOpen={setIsModalOpen}
-                                setIsLogin={setIsLogin}
-                                increaseHandler={increaseHandler}
-                                decreaseHandler={decreaseHandler}
-                            />
-                            <ViewProduct
-                                addToCart={addToCart}
-                                items={items}
-                                loading={loading}
-                                isLogin={isLogin}
-                            />
-                            <Cart
-                                carts={carts}
-                                isLogin={isLogin}
-                                loading={loading}
-                                increaseHandler={increaseHandler}
-                                decreaseHandler={decreaseHandler}
-                            />
-                        </>
+                        <Dashboard
+                            items={items}
+                            carts={carts}
+                            addToCart={addToCart}
+                            loading={loading}
+                            isLogin={isLogin}
+                            setIsLogin={setIsLogin}
+                            isModalOpen={isModalOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            increaseHandler={increaseHandler}
+                            decreaseHandler={decreaseHandler}
+                        />
                     }
                 />
                 <Route
@@ -186,9 +172,9 @@ export default function App() {
                                 carts={carts}
                                 loading={loading}
                                 isLogin={isLogin}
+                                setIsLogin={setIsLogin}
                                 isModalOpen={isModalOpen}
                                 setIsModalOpen={setIsModalOpen}
-                                setIsLogin={setIsLogin}
                                 increaseHandler={increaseHandler}
                                 decreaseHandler={decreaseHandler}
                             />
@@ -199,10 +185,17 @@ export default function App() {
                 <Route
                     path="/login"
                     element={
-                        <Login isLogin={isLogin} setIsLogin={setIsLogin} />
+                        <Authentication
+                            authType="Login"
+                            isLogin={isLogin}
+                            setIsLogin={setIsLogin}
+                        />
                     }
                 />
-                <Route path="/signup" element={<Signup />} />
+                <Route
+                    path="/signup"
+                    element={<Authentication authType="Sign up" />}
+                />
             </Routes>
         </Home>
     )

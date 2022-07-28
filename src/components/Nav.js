@@ -65,11 +65,8 @@ export default function Nav({
                         onClick={() => {
                             window.localStorage.setItem('isLogin', false)
                             window.localStorage.removeItem('id')
-                            setIsLogin(
-                                JSON.parse(
-                                    window.localStorage.getItem('isLogin')
-                                )
-                            )
+
+                            setIsLogin(false)
                         }}
                     />
                 </Link>
