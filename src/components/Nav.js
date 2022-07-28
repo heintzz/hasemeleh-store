@@ -7,16 +7,25 @@ import store from '../icons/store-front.svg'
 import bag from '../icons/bag-handle.svg'
 import logout from '../icons/logout.svg'
 
-export default function Nav({ carts, loading, isLogin, setIsLogin }) {
+export default function Nav({
+    carts,
+    loading,
+    isLogin,
+    setIsLogin,
+    decreaseHandler,
+    increaseHandler,
+    isModalOpen,
+    setIsModalOpen,
+}) {
+    
     const [isOpen, setIsOpen] = useState(false)
-    const [isModalOpen, setIsModalOpen] = useState(false)
     const info = carts?.reduce(
         (acc, cur) => {
             acc.total += cur.amount
             acc.price += cur.price * cur.amount
             return acc
         },
-        { total: null, price: null }
+        { total: null, price: 0 }
     )
 
     return (
@@ -68,9 +77,9 @@ export default function Nav({ carts, loading, isLogin, setIsLogin }) {
             <div
                 className={`${
                     isModalOpen ? 'flex' : 'hidden'
-                } fixed justify-center sm:items-center bg-slate-200 opacity-80 left-0 w-full h-full`}
+                } fixed justify-center sm:items-center bg-slate-200/80 left-0 w-full h-full`}
             >
-                <div className="relative w-64 h-96 md:w-96 mt-5 sm:mt-0 bg-white opacity-100 rounded-2xl" >
+                <div className="relative w-64 h-96 md:w-96 mt-5 left-5 sm:left-0 sm:mt-0 bg-white/100 rounded-2xl overflow-y-auto">
                     <img
                         src={whiteClose}
                         alt="close button"
@@ -86,14 +95,24 @@ export default function Nav({ carts, loading, isLogin, setIsLogin }) {
                             />
                             <div className="flex flex-col text-xs py-2 ml-5">
                                 <h4 className="mb-3">{cart.title}</h4>
-                                <div className="flex items-center justify-between w-full">
+                                <div className="flex items-center justify-between w-[150px]">
                                     <h5>{cart.price}</h5>
-                                    <div className="my-1 ml-5">
-                                        <button className="px-2 mr-1 rounded-lg bg-black text-white">
+                                    <div className="my-1 flex">
+                                        <button
+                                            className="px-2 rounded-lg bg-black text-white"
+                                            onClick={() =>
+                                                decreaseHandler(cart.id)
+                                            }
+                                        >
                                             -
                                         </button>
-                                        <span>{cart.amount}</span>
-                                        <button className="px-2 ml-1 rounded-lg bg-black text-white">
+                                        <div className='mx-1 w-2 text-center'>{cart.amount}</div>
+                                        <button
+                                            className="px-2 rounded-lg bg-black text-white"
+                                            onClick={() =>
+                                                increaseHandler(cart.id)
+                                            }
+                                        >
                                             +
                                         </button>
                                     </div>
@@ -101,7 +120,11 @@ export default function Nav({ carts, loading, isLogin, setIsLogin }) {
                             </div>
                         </div>
                     ))}
-                    <div className="w-fit p-2 rounded-lg mx-4 mt-5 bg-red-200">{`$ ${info.price}`}</div>
+                    {info.price ? (
+                        <div className="w-fit p-2 rounded-lg mx-4 mt-5 bg-red-200">{`$ ${info.price}`}</div>
+                    ) : (
+                        <p className="mx-4 mt-3">No item</p>
+                    )}
                 </div>
             </div>
         </div>

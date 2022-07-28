@@ -23,8 +23,9 @@ export default function App() {
     // eslint-disable-next-line
     const [items, setItems] = useState([])
     const [carts, setCarts] = useState([])
-    const [loading, setLoading] = useState(true)
     const [isLogin, setIsLogin] = useState()
+    const [loading, setLoading] = useState(true)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const userID = window.localStorage.getItem('id')
 
     const productsRef = query(collection(db, 'products'), orderBy('title'))
@@ -145,7 +146,7 @@ export default function App() {
     }
 
     return (
-        <Home>
+        <Home isModalOpen={isModalOpen}>
             <Routes>
                 <Route
                     path="/"
@@ -155,7 +156,11 @@ export default function App() {
                                 carts={carts}
                                 loading={loading}
                                 isLogin={isLogin}
+                                isModalOpen={isModalOpen}
+                                setIsModalOpen={setIsModalOpen}
                                 setIsLogin={setIsLogin}
+                                increaseHandler={increaseHandler}
+                                decreaseHandler={decreaseHandler}
                             />
                             <ViewProduct
                                 addToCart={addToCart}
@@ -179,8 +184,13 @@ export default function App() {
                         <>
                             <Nav
                                 carts={carts}
+                                loading={loading}
                                 isLogin={isLogin}
+                                isModalOpen={isModalOpen}
+                                setIsModalOpen={setIsModalOpen}
                                 setIsLogin={setIsLogin}
+                                increaseHandler={increaseHandler}
+                                decreaseHandler={decreaseHandler}
                             />
                             <About items={items} userID={userID} />
                         </>
