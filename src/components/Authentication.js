@@ -22,8 +22,6 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
     let pathLogin = isLogin ? '/' : '/login'
     let path = authType === 'Login' ? pathLogin : pathSignup
 
-    console.log(`path: ${pathLogin}`)
-
     const authenticationHandler = useRef(null)
     const onAuthentication = () => {
         let email = authenticationHandler.current.email.value
@@ -106,7 +104,7 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 {showError && !success && (
                     <ErrorMessage type={errorType} authType={authType} />
                 )}
-                {!showError && success && isLogin && (
+                {!showError && success && authType === 'Sign up' && (
                     <SuccessMessage authType={authType} />
                 )}
                 <Link

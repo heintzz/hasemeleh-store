@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Nav from './components/Nav'
 import About from './components/About'
 import Home from './components/Home'
@@ -53,7 +53,7 @@ export default function App() {
         }
 
         getProducts()
-    }, [])
+    }, [productsRef])
 
     useEffect(() => {
         const getCarts = async () => {
@@ -66,7 +66,7 @@ export default function App() {
         }
 
         getCarts()
-    }, [userID])
+    }, [userID, usersRef])
 
     const addToCart = async (itemID) => {
         if (isLogin) {
@@ -185,16 +185,26 @@ export default function App() {
                 <Route
                     path="/login"
                     element={
-                        <Authentication
-                            authType="Login"
-                            isLogin={isLogin}
-                            setIsLogin={setIsLogin}
-                        />
+                        isLogin ? (
+                            <Navigate to="/" />
+                        ) : (
+                            <Authentication
+                                authType="Login"
+                                isLogin={isLogin}
+                                setIsLogin={setIsLogin}
+                            />
+                        )
                     }
                 />
                 <Route
                     path="/signup"
-                    element={<Authentication authType="Sign up" />}
+                    element={
+                        isLogin ? (
+                            <Navigate to="/" />
+                        ) : (
+                            <Authentication authType="Sign up" />
+                        )
+                    }
                 />
             </Routes>
         </Home>
