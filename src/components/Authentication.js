@@ -40,14 +40,9 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                     setIsLogin(
                         JSON.parse(window.localStorage.getItem('isLogin'))
                     )
-                    setSuccess(true)
-                    setTimeout(() => {
-                        setSuccess(false)
-                    }, 3500)
                 })
                 .catch((err) => {
                     setErrorType(err.code)
-                    setSuccess(false)
                     setShowError(true)
                     setTimeout(() => {
                         setShowError(false)
@@ -73,7 +68,7 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 })
         }
     }
-    console.log(showError, success, )
+    console.log(showError, success)
     return (
         <div className="h-screen w-screen flex flex-col gap-y-5 items-center justify-center">
             <form
@@ -104,9 +99,7 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 {showError && !success && (
                     <ErrorMessage type={errorType} authType={authType} />
                 )}
-                {!showError && success && (
-                    <SuccessMessage authType={authType} />
-                )}
+                {!showError && success && <SuccessMessage />}
                 <Link
                     to={path}
                     type="submit"
