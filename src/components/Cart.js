@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import SkeletonCarts from '../skeletons/Carts/SkeletonCarts'
 import bag from '../icons/bag-handle.svg'
 
@@ -62,7 +63,21 @@ export default function Cart({
                 </div>
             ) : (
                 <div className="mt-2">
-                    {loading ? <SkeletonCarts /> : 'No Item'}
+                    {loading ? (
+                        <SkeletonCarts />
+                    ) : isLogin ? (
+                        'Cart is empty'
+                    ) : (
+                        <div>
+                            You should
+                            <Link to="/login">
+                                <span className="text-blue-500 mx-1 underline">
+                                    login
+                                </span>
+                            </Link>
+                            first
+                        </div>
+                    )}
                 </div>
             )}
 
