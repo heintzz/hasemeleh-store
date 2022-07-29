@@ -27,7 +27,7 @@ export default function Nav({
         },
         { total: null, price: 0 }
     )
-
+    
     return (
         <div className="w-10">
             <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 rounded-xl bg-blue-100">
@@ -103,9 +103,7 @@ export default function Nav({
                                         >
                                             -
                                         </button>
-                                        <div className="mx-1 w-2 text-center">
-                                            {cart.amount}
-                                        </div>
+                                        <input className="mx-1 w-5 text-center" value={cart.amount}/>
                                         <button
                                             className="px-2 rounded-lg bg-black text-white"
                                             onClick={() =>

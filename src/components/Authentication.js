@@ -8,10 +8,12 @@ import {
     signInWithEmailAndPassword,
 } from 'firebase/auth'
 import { addDoc, collection } from 'firebase/firestore'
+import SuccessMessage from './SuccessMessage'
 
 export default function Authentication({ authType, isLogin, setIsLogin }) {
     const [errorType, setErrorType] = useState()
     const [showError, setShowError] = useState(false)
+    const [success, setSuccess] = useState(true)
 
     const usersRef = collection(db, 'users')
     let pathSignup =
@@ -40,9 +42,14 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                     setIsLogin(
                         JSON.parse(window.localStorage.getItem('isLogin'))
                     )
+                    setSuccess(true)
+                    setTimeout(() => {
+                        setSuccess(false)
+                    }, 3500)
                 })
                 .catch((err) => {
                     setErrorType(err.code)
+                    setSuccess(false)
                     setShowError(true)
                     setTimeout(() => {
                         setShowError(false)
@@ -53,9 +60,14 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 .then(async (userCredential) => {
                     const user = userCredential.user.uid
                     await addDoc(usersRef, { userID: user, carts: [] })
+                    setSuccess(true)
+                    setTimeout(() => {
+                        setSuccess(false)
+                    }, 3500)
                 })
                 .catch((err) => {
                     setErrorType(err.code)
+                    setSuccess(false)
                     setShowError(true)
                     setTimeout(() => {
                         setShowError(false)
@@ -91,8 +103,11 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                     className="rounded-lg pl-2 py-1"
                     placeholder="••••••••"
                 />
-                {showError && (
+                {showError && !success && (
                     <ErrorMessage type={errorType} authType={authType} />
+                )}
+                {!showError && success && isLogin && (
+                    <SuccessMessage authType={authType} />
                 )}
                 <Link
                     to={path}
