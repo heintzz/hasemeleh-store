@@ -53,7 +53,7 @@ export default function App() {
         }
 
         getProducts()
-    }, [productsRef])
+    }, [])
 
     useEffect(() => {
         const getCarts = async () => {
@@ -66,7 +66,7 @@ export default function App() {
         }
 
         getCarts()
-    }, [userID, usersRef])
+    }, [userID])
 
     const addToCart = async (itemID) => {
         if (isLogin) {

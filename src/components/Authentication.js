@@ -13,7 +13,7 @@ import SuccessMessage from './SuccessMessage'
 export default function Authentication({ authType, isLogin, setIsLogin }) {
     const [errorType, setErrorType] = useState()
     const [showError, setShowError] = useState(false)
-    const [success, setSuccess] = useState(true)
+    const [success, setSuccess] = useState(false)
 
     const usersRef = collection(db, 'users')
     let pathSignup =
@@ -73,7 +73,7 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 })
         }
     }
-
+    console.log(showError, success, )
     return (
         <div className="h-screen w-screen flex flex-col gap-y-5 items-center justify-center">
             <form
@@ -104,7 +104,7 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 {showError && !success && (
                     <ErrorMessage type={errorType} authType={authType} />
                 )}
-                {!showError && success && authType === 'Sign up' && (
+                {!showError && success && (
                     <SuccessMessage authType={authType} />
                 )}
                 <Link
