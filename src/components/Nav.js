@@ -1,25 +1,16 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import open from '../icons/menu.svg'
 import close from '../icons/close.svg'
-import whiteClose from '../icons/close-white.svg'
 import store from '../icons/store-front.svg'
 import bag from '../icons/bag-handle.svg'
 import logout from '../icons/logout.svg'
-import loginAdvice from '../icons/login-advice.svg'
 import AppContext from '../context/AppContext'
+import CartModal from './CartModal'
 
 export default function Nav() {
-    const {
-        carts,
-        isLogin,
-        isLoading,
-        isModalOpen,
-        showModal,
-        decreaseHandler,
-        increaseHandler,
-        changeLogin,
-    } = useContext(AppContext)
+    const { carts, isLogin, isLoading, isModalOpen, showModal, changeLogin } = useContext(AppContext)
     const [isOpen, setIsOpen] = useState(false)
 
     const info = carts?.reduce(
@@ -50,7 +41,7 @@ export default function Nav() {
                     <img
                         src={bag}
                         alt="bag button"
-                        onClick={() => showModal(true)}
+                        onClick={isLoading ? '' : () => showModal(true)}
                     />
                     {carts.length && isLogin && !isLoading ? (
                         <div className="absolute top-4 -right-1 w-3 h-3 text-[8px] text-center rounded-lg bg-red-600 text-white">
@@ -74,80 +65,9 @@ export default function Nav() {
                     />
                 </Link>
             </div>
-            <div
-                className={`${
-                    isModalOpen ? 'flex' : 'hidden'
-                } fixed justify-center sm:items-center bg-slate-200/80 left-0 w-full h-full`}
-            >
-                <div className="relative w-64 h-96 md:w-96 mt-5 left-5 sm:left-0 sm:mt-0 bg-white/100 rounded-2xl overflow-y-auto">
-                    <img
-                        src={whiteClose}
-                        alt="close button"
-                        className="absolute top-3 right-3 bg-red-600 w-5 rounded-full text-center hover:cursor-pointer"
-                        onClick={() => showModal(false)}
-                    />
-                    {carts.map((cart) => (
-                        <div className="pl-2 pt-2 flex" key={cart.id}>
-                            <img
-                                src={cart.img}
-                                alt={cart.tile}
-                                className="w-14 object-contain"
-                            />
-                            <div className="flex flex-col text-xs py-2 ml-5">
-                                <h4 className="mb-3">{cart.title}</h4>
-                                <div className="flex items-center justify-between w-[150px]">
-                                    <h5>{cart.price}</h5>
-                                    <div className="my-1 flex">
-                                        <button
-                                            className="px-2 rounded-lg bg-black text-white"
-                                            onClick={() =>
-                                                decreaseHandler(cart.id)
-                                            }
-                                        >
-                                            -
-                                        </button>
-                                        <input
-                                            className="mx-1 w-5 text-center"
-                                            value={cart.amount}
-                                        />
-                                        <button
-                                            className="px-2 rounded-lg bg-black text-white"
-                                            onClick={() =>
-                                                increaseHandler(cart.id)
-                                            }
-                                        >
-                                            +
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                    {info.price ? (
-                        <div className="w-fit p-2 rounded-lg mx-4 mt-5 mb-5 bg-red-200">{`$ ${info.price}`}</div>
-                    ) : isLogin ? (
-                        <p className="mx-4 mt-3">Cart is empty</p>
-                    ) : (
-                        <div className="mx-4 mt-3">
-                            <div>
-                                You should
-                                <Link to="/login">
-                                    <span className="text-blue-500 mx-1 underline">
-                                        login
-                                    </span>
-                                </Link>
-                                first
-                            </div>
-                            <img
-                                src={loginAdvice}
-                                alt="login"
-                                className="mt-14"
-                                draggable="false"
-                            />
-                        </div>
-                    )}
-                </div>
-            </div>
+            <AnimatePresence exitBeforeEnter={true}>
+                {isModalOpen && <CartModal price={info.price} />}
+            </AnimatePresence>
         </div>
     )
 }

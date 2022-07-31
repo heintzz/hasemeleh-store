@@ -23,13 +23,15 @@ export default function AppState(props) {
     const [state, dispatch] = useReducer(reducer, initialState)
     const { items, carts, isLogin } = state
 
-    const usersRef = collection(db, 'users')
     const userID = window.localStorage.getItem('id')
+    const usersRef = collection(db, 'users')
     const productsRef = query(collection(db, 'products'), orderBy('price'))
 
     useEffect(() => {
+        const lastLogin = parseInt(window.localStorage.getItem('time'))
         const newDate = Date.parse(new Date())
-        const expired = parseInt(window.localStorage.getItem('time')) + 3600000 < newDate
+        const oneDay = 1000*60*60*24
+        const expired = lastLogin + oneDay < newDate
 
         if (expired) {
             window.localStorage.setItem('isLogin', false)
@@ -142,10 +144,7 @@ export default function AppState(props) {
     }
 
     const changeLogin = (status) => {
-        dispatch({
-            type: 'CHANGE_LOGIN_STATE',
-            payload: status,
-        })
+        dispatch({type: 'CHANGE_LOGIN_STATE', payload: status})
     }
 
     return (
