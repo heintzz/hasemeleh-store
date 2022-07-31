@@ -1,7 +1,10 @@
+import React, { useContext } from 'react'
 import Item from './Item'
+import AppContext from '../context/AppContext'
 import notFound from '../icons/not-found.svg'
 
-export default function ProductItems({ addToCart, isLogin, items, keyword }) {
+export default function Product({ keyword }) {
+    const { items, isLogin, addToCart } = useContext(AppContext)
     const filteredItems = items.filter(
         (item) =>
             item.title.toLowerCase().includes(keyword.toLowerCase()) ||

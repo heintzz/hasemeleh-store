@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import open from '../icons/menu.svg'
 import close from '../icons/close.svg'
@@ -7,18 +7,21 @@ import store from '../icons/store-front.svg'
 import bag from '../icons/bag-handle.svg'
 import logout from '../icons/logout.svg'
 import loginAdvice from '../icons/login-advice.svg'
+import AppContext from '../context/AppContext'
 
-export default function Nav({
-    carts,
-    loading,
-    isLogin,
-    setIsLogin,
-    decreaseHandler,
-    increaseHandler,
-    isModalOpen,
-    setIsModalOpen,
-}) {
+export default function Nav() {
+    const {
+        carts,
+        isLogin,
+        isLoading,
+        isModalOpen,
+        showModal,
+        decreaseHandler,
+        increaseHandler,
+        changeLogin,
+    } = useContext(AppContext)
     const [isOpen, setIsOpen] = useState(false)
+
     const info = carts?.reduce(
         (acc, cur) => {
             acc.total += cur.amount
@@ -27,7 +30,7 @@ export default function Nav({
         },
         { total: null, price: 0 }
     )
-    
+
     return (
         <div className="w-10">
             <div className="fixed flex flex-col items-start inset-y-5 gap-y-6 p-2 rounded-xl bg-blue-100">
@@ -47,9 +50,9 @@ export default function Nav({
                     <img
                         src={bag}
                         alt="bag button"
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={() => showModal(true)}
                     />
-                    {carts.length && isLogin && !loading ? (
+                    {carts.length && isLogin && !isLoading ? (
                         <div className="absolute top-4 -right-1 w-3 h-3 text-[8px] text-center rounded-lg bg-red-600 text-white">
                             {info.total}
                         </div>
@@ -66,7 +69,7 @@ export default function Nav({
                             window.localStorage.setItem('isLogin', false)
                             window.localStorage.removeItem('id')
 
-                            setIsLogin(false)
+                            changeLogin(false)
                         }}
                     />
                 </Link>
@@ -81,7 +84,7 @@ export default function Nav({
                         src={whiteClose}
                         alt="close button"
                         className="absolute top-3 right-3 bg-red-600 w-5 rounded-full text-center hover:cursor-pointer"
-                        onClick={() => setIsModalOpen(false)}
+                        onClick={() => showModal(false)}
                     />
                     {carts.map((cart) => (
                         <div className="pl-2 pt-2 flex" key={cart.id}>
@@ -103,7 +106,10 @@ export default function Nav({
                                         >
                                             -
                                         </button>
-                                        <input className="mx-1 w-5 text-center" value={cart.amount}/>
+                                        <input
+                                            className="mx-1 w-5 text-center"
+                                            value={cart.amount}
+                                        />
                                         <button
                                             className="px-2 rounded-lg bg-black text-white"
                                             onClick={() =>

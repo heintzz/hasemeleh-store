@@ -2,7 +2,7 @@ import React from 'react'
 import ImageSkeleton from './ImageSkeleton'
 import Description from './Description'
 
-const SkeletonProducts = () => {
+const ContentSkeleton = () => {
     return (
         <div className="flex w-12/12 flex-wrap bg-slate-100 pt-10 box-border">
             {[1, 2, 3, 4, 5].map((n) => (
@@ -18,4 +18,4 @@ const SkeletonProducts = () => {
     )
 }
 
-export default SkeletonProducts
+export default ContentSkeleton

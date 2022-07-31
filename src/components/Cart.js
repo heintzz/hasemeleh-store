@@ -1,14 +1,11 @@
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import SkeletonCarts from '../skeletons/Carts/SkeletonCarts'
 import bag from '../icons/bag-handle.svg'
+import AppContext from '../context/AppContext'
+import SkeletonCarts from '../skeletons/Carts/SkeletonCarts'
 
-export default function Cart({
-    carts,
-    isLogin,
-    loading,
-    increaseHandler,
-    decreaseHandler,
-}) {
+export default function Cart() {
+    const { carts, isLogin, isLoading, increaseHandler, decreaseHandler } = useContext(AppContext)
     const finalPrice = carts?.reduce((acc, cur) => {
         acc += cur.price * cur.amount
         return acc
@@ -38,19 +35,19 @@ export default function Cart({
                                         <p>{`$ ${itemsPrice}`}</p>
                                         <div className="my-1">
                                             <button
-                                                className="px-3 bg-black text-white rounded-lg mr-2"
                                                 onClick={() =>
                                                     decreaseHandler(id)
                                                 }
+                                                className="px-3 bg-black text-white rounded-lg mr-2"
                                             >
                                                 -
                                             </button>
                                             <span>{amount}</span>
                                             <button
-                                                className="px-3 bg-black text-white rounded-lg ml-2"
                                                 onClick={() =>
                                                     increaseHandler(id)
                                                 }
+                                                className="px-3 bg-black text-white rounded-lg ml-2"
                                             >
                                                 +
                                             </button>
@@ -63,7 +60,7 @@ export default function Cart({
                 </div>
             ) : (
                 <div className="mt-2">
-                    {loading ? (
+                    {isLoading ? (
                         <SkeletonCarts />
                     ) : isLogin ? (
                         'Cart is empty'

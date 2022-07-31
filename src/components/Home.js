@@ -1,17 +1,14 @@
 import React from 'react'
+import Cart from './Cart'
+import Content from './Content'
+import Nav from './Nav'
 
-const Home = ({ children, isModalOpen }) => {
+export default function Home() {
     return (
-        <div
-            className={`bg-slate-100 ${
-                isModalOpen ? 'max-h-screen overflow-hidden' : 'min-h-screen'
-            } box-border`}
-        >
-            <div className="max-w-7xl mx-auto flex font-mono px-5">
-                {children}
-            </div>
-        </div>
+        <>
+            <Nav />
+            <Content />
+            <Cart />
+        </>
     )
 }
-
-export default Home

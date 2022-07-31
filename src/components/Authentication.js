@@ -1,23 +1,24 @@
+import React, { useContext, useRef, useState } from 'react'
 import Move from './Move'
 import ErrorMessage from './ErrorMessage'
-import { useRef, useState } from 'react'
-import { auth, db } from '../config/firebase-config'
+import SuccessMessage from './SuccessMessage'
+import AppContext from '../context/AppContext'
 import { Link } from 'react-router-dom'
+import { auth, db } from '../config/firebase-config'
+import { addDoc, collection } from 'firebase/firestore'
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { addDoc, collection } from 'firebase/firestore'
-import SuccessMessage from './SuccessMessage'
 
-export default function Authentication({ authType, isLogin, setIsLogin }) {
+export default function Authentication({ authType }) {
+    const { isLogin, changeLogin } = useContext(AppContext)
     const [errorType, setErrorType] = useState()
     const [showError, setShowError] = useState(false)
     const [success, setSuccess] = useState(false)
 
     const usersRef = collection(db, 'users')
-    let pathSignup =
-        errorType !== undefined && !errorType ? '/login' : '/signup'
+    let pathSignup = errorType !== undefined && !errorType ? '/login' : '/signup'
 
     let pathLogin = isLogin ? '/' : '/login'
     let path = authType === 'Login' ? pathLogin : pathSignup
@@ -36,8 +37,8 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                     window.localStorage.setItem('isLogin', true)
                     window.localStorage.setItem('id', user)
                     window.localStorage.setItem('time', newDate)
-
-                    setIsLogin(
+                    
+                    changeLogin(
                         JSON.parse(window.localStorage.getItem('isLogin'))
                     )
                 })
@@ -68,7 +69,7 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 })
         }
     }
-    console.log(showError, success)
+
     return (
         <div className="h-screen w-screen flex flex-col gap-y-5 items-center justify-center">
             <form
@@ -99,7 +100,9 @@ export default function Authentication({ authType, isLogin, setIsLogin }) {
                 {showError && !success && (
                     <ErrorMessage type={errorType} authType={authType} />
                 )}
-                {!showError && success && <SuccessMessage />}
+                {!showError && success &&  (
+                    <SuccessMessage authType={authType} />
+                )}
                 <Link
                     to={path}
                     type="submit"

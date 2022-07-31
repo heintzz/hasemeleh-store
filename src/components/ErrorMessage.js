@@ -57,6 +57,12 @@ const ErrorMessage = ({ type, authType }) => {
                             user not found, please signup
                         </div>
                     )
+                case 'auth/internal-error':
+                    return (
+                        <div className="absolute top-0 right-5 text-xs py-1 px-2 mt-5 rounded-md bg-red-400 text-white w-fit">
+                            please fill both email and password
+                        </div>
+                    )
             }
             break
     }
