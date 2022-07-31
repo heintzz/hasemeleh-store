@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Item from './Item'
 import AppContext from '../context/AppContext'
 import notFound from '../icons/not-found.svg'
+import { motion } from 'framer-motion'
 
 export default function Product({ keyword }) {
     const { items, isLogin, addToCart } = useContext(AppContext)
@@ -15,14 +16,25 @@ export default function Product({ keyword }) {
         <div className="flex flex-wrap mt-10">
             {keyword ? (
                 filteredItems.length ? (
-                    filteredItems.map((item) => {
+                    filteredItems.map((item, time) => {
                         return (
-                            <Item
-                                item={item}
-                                addToCart={addToCart}
-                                isLogin={isLogin}
-                                key={item.id}
-                            />
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 1,
+                                        delay: time * 0.25,
+                                    },
+                                }}
+                            >
+                                <Item
+                                    item={item}
+                                    addToCart={addToCart}
+                                    isLogin={isLogin}
+                                    key={item.id}
+                                />
+                            </motion.div>
                         )
                     })
                 ) : (

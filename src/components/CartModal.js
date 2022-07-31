@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import loginAdvice from '../icons/login-advice.svg'
 import whiteClose from '../icons/close-white.svg'
+// eslint-disable-next-line
 import arrowDown from '../icons/arrow-down.svg'
 import AppContext from '../context/AppContext'
 
 export default function CartModal({ price }) {
-    const { carts, isLogin, showModal, increaseHandler, decreaseHandler } = useContext(AppContext)
+    const { carts, isLogin, showModal, increaseHandler, decreaseHandler } =
+        useContext(AppContext)
 
     const dropIn = {
         hidden: {
@@ -29,9 +31,9 @@ export default function CartModal({ price }) {
     }
 
     return (
-        <div className="flex fixed justify-center items-center bg-slate-300/80 left-0 w-full h-full md:hidden">
+        <div className="flex fixed justify-center items-center bg-slate-300/80 z-10 left-0 w-full h-full md:hidden">
             <motion.div
-                className="relative w-80 h-96 md:w-96 bg-slate-100 rounded-2xl overflow-y-auto"
+                className="relative w-80 h-96 md:w-96 bg-slate-100 rounded-2xl z-20 overflow-y-auto"
                 variants={dropIn}
                 initial="hidden"
                 animate="visible"
@@ -44,10 +46,17 @@ export default function CartModal({ price }) {
                     className="absolute top-3 right-3 bg-red-600 w-5 rounded-full text-center hover:cursor-pointer"
                 />
                 {carts.map((cart, time) => (
-                    <motion.div 
-                    className="pl-2 pt-2 flex border-b" key={cart.id}
-                    initial={{opacity: 0, x: -50}}
-                    animate={{opacity: 1, x: 0, transition: {duration: 1, delay: time*0.25}}}>
+                    <motion.div
+                        className="pl-2 pt-2 flex border-b"
+                        key={cart.id}
+                        initial={{ x: -50, opacity: 0 }}
+                        whileInView={{
+                            x: 0,
+                            opacity: 1,
+                            transition: { duration: 1, delay: time * 0.3 },
+                        }}
+                        viewport={{ once: true }}
+                    >
                         <img
                             src={cart.img}
                             alt={cart.tile}
@@ -80,7 +89,13 @@ export default function CartModal({ price }) {
                 ))}
 
                 {price ? (
-                    <div className="w-fit p-2 rounded-lg mx-4 mt-5 mb-5 bg-blue-400/90 text-white">{`$ ${price}`}</div>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="w-fit p-2 rounded-lg mx-4 mt-5 mb-5 bg-blue-400/90 text-white"
+                    >
+                        {`$ ${price}`}
+                    </motion.div>
                 ) : isLogin ? (
                     <p className="mx-4 mt-3">Cart is empty</p>
                 ) : (
