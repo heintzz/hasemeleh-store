@@ -7,6 +7,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import AppContext from './context/AppContext'
 import './App.css'
+import NotFound from './components/NotFound'
 
 export default function App() {
     const {isLogin} = useContext(AppContext)
@@ -17,6 +18,7 @@ export default function App() {
                 <Route path="/about/:itemId" element={<About />} />
                 <Route path="/login" element={isLogin ? <Navigate to='/' /> : <Login />} />
                 <Route path="/signup" element={isLogin ? <Navigate to='/' /> : <Signup />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Container>
     )
