@@ -8,30 +8,21 @@ import arrowDown from '../icons/arrow-down.svg'
 import AppContext from '../context/AppContext'
 
 export default function CartModal({ price }) {
-    const { carts, isLogin, showModal, increaseHandler, decreaseHandler } =
-        useContext(AppContext)
+    const { carts, isLogin, showModal, increaseHandler, decreaseHandler, balance, handleBalance } = useContext(AppContext)
 
     const dropIn = {
-        hidden: {
-            opacity: 0,
-            scale: 0,
-        },
+        hidden: { opacity: 0, scale: 0 },
         visible: {
             y: '0',
             opacity: 1,
             scale: 1,
-            transition: {
-                duration: 0.5,
-                type: 'tween',
-            },
+            transition: { type: 'tween', duration: 0.5 },
         },
-        exit: {
-            scale: 0,
-        },
+        exit: { scale: 0 },
     }
 
     return (
-        <div className="flex fixed justify-center items-center bg-slate-300/80 z-10 left-0 w-full h-full md:hidden">
+        <div className="flex fixed justify-center items-center bg-slate-300/80 z-10 left-0 w-full h-full md:hidden md">
             <motion.div
                 className="relative w-80 h-96 md:w-96 bg-slate-100 rounded-2xl z-20 overflow-y-auto"
                 variants={dropIn}
@@ -49,11 +40,10 @@ export default function CartModal({ price }) {
                     <motion.div
                         className="pl-2 pt-2 flex border-b"
                         key={cart.id}
-                        initial={{ x: -50, opacity: 0 }}
+                        initial={{ opacity: 0 }}
                         whileInView={{
-                            x: 0,
                             opacity: 1,
-                            transition: { duration: 1, delay: time * 0.3 },
+                            transition: { duration: 1, delay: time * 0.5 },
                         }}
                         viewport={{ once: true }}
                     >
@@ -65,7 +55,7 @@ export default function CartModal({ price }) {
                         <div className="flex flex-col text-xs py-2 ml-5 w-44 sm:w-52 md:w-60">
                             <h4 className="mb-3">{cart.title}</h4>
                             <div className="flex items-center justify-between">
-                                <h5>{cart.price}</h5>
+                                <h5>{`$ ${cart.price}`}</h5>
                                 <div className="my-1 flex">
                                     <button
                                         className="px-2 rounded-lg bg-black text-white"
@@ -92,7 +82,8 @@ export default function CartModal({ price }) {
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        className="w-fit p-2 rounded-lg mx-4 mt-5 mb-5 bg-blue-400/90 text-white"
+                        className="w-fit p-2 rounded-lg mx-4 mt-5 mb-5 bg-blue-400/90 text-white hover:cursor-pointer"
+                        onClick={balance > price ? () => handleBalance(price) : ''}
                     >
                         {`$ ${price}`}
                     </motion.div>

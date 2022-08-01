@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Search({ searchKey, changeHandler, enterHandler }) {
     return (
-        <div className="flex flex-col max-w-xs mr-5 sm:mx-auto">
+        <div className="flex flex-col max-w-xs mr-5 z-0 sm:mx-auto">
             <label htmlFor="search-bar">Search Item</label>
             <input
                 type="text"

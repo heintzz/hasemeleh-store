@@ -1,11 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import bag from '../icons/bag-handle.svg'
 import AppContext from '../context/AppContext'
 import SkeletonCarts from '../skeletons/Carts/SkeletonCarts'
 
 export default function Cart() {
-    const { carts, isLogin, isLoading, increaseHandler, decreaseHandler } = useContext(AppContext)
+    const {
+        carts,
+        isLogin,
+        isLoading,
+        increaseHandler,
+        decreaseHandler,
+        balance,
+        handleBalance,
+    } = useContext(AppContext)
+    const [deficit, setDeficit] = useState(false)
     const finalPrice = carts?.reduce((acc, cur) => {
         acc += cur.price * cur.amount
         return acc
@@ -79,10 +88,29 @@ export default function Cart() {
             )}
 
             {finalPrice && isLogin && (
-                <button className="flex p-2 gap-x-3 bg-blue-100 w-fit rounded-lg">
-                    <img src={bag} alt="bag handle icon" />
-                    <p>{`$ ${finalPrice.toFixed(2)}`}</p>
-                </button>
+                <>
+                    <button
+                        className="flex p-2 gap-x-3 mb-5 bg-blue-100 w-fit rounded-lg"
+                        onClick={
+                            balance >= finalPrice
+                                ? () => handleBalance(finalPrice.toFixed(2))
+                                : function () {
+                                      setDeficit(true)
+                                      setTimeout(() => {
+                                          setDeficit(false)
+                                      }, 2500)
+                                  }
+                        }
+                    >
+                        <img src={bag} alt="bag handle icon" />
+                        <p>{`$ ${finalPrice.toFixed(2)}`}</p>
+                    </button>
+                    {deficit && (
+                        <div className="text-xs py-1 px-2 rounded-md bg-red-400 text-white w-fit">
+                            transaction failed. check your balance
+                        </div>
+                    )}
+                </>
             )}
         </div>
     )

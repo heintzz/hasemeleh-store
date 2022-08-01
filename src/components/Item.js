@@ -7,7 +7,7 @@ export default function Item({ item }) {
     const { addToCart, isLogin } = useContext(AppContext)
     const { img, title, price, series, id } = item
     return (
-        <div className="flex flex-col w-6/12 lg:w-4/12 text-[10px] pr-5 mb-10 sm:text-sm hover:scale-110 transition duration-1000">
+        <div className="flex flex-col w-6/12 lg:w-4/12 text-[10px] pr-5 mb-10 sm:text-sm">
             <Link to={`/about/${id}`}>
                 <img
                     src={img}

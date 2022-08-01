@@ -14,6 +14,7 @@ import {
 const initialState = {
     items: [],
     carts: [],
+    balance: null,
     isLogin: null,
     isLoading: true,
     isModalOpen: false,
@@ -30,7 +31,7 @@ export default function AppState(props) {
     useEffect(() => {
         const lastLogin = parseInt(window.localStorage.getItem('time'))
         const newDate = Date.parse(new Date())
-        const oneDay = 1000*60*60*24
+        const oneDay = 1000 * 60 * 60 * 24
         const expired = lastLogin + oneDay < newDate
 
         if (expired) {
@@ -42,14 +43,22 @@ export default function AppState(props) {
         changeLogin(JSON.parse(window.localStorage.getItem('isLogin')))
         window.localStorage.setItem('time', newDate)
 
-        const getData = async () => {
+        const getInfo = async () => {
             const res = await getDocs(productsRef)
             const data = res.docs.map((item) => {
-                return { ...item.data(), id: item.id }
+                return { ...item.data(), id: item }
             })
             dispatch({ type: 'GET_ITEMS', payload: data })
+
+            const bal = await getDocs(usersRef)
+            const user = bal.docs.find((doc) => doc.data().userID === userID).id
+            const balance = bal.docs
+                .find((doc) => doc.id === user)
+                .data().balance
+            dispatch({ type: 'GET_BALANCE', payload: balance })
         }
-        getData()
+
+        getInfo()
     }, [])
 
     useEffect(() => {
@@ -140,15 +149,39 @@ export default function AppState(props) {
     }
 
     const showModal = (condition) => {
-        dispatch({type: 'OPEN_CLOSE', payload: condition})
+        dispatch({ type: 'OPEN_CLOSE', payload: condition })
     }
 
     const changeLogin = (status) => {
-        dispatch({type: 'CHANGE_LOGIN_STATE', payload: status})
+        dispatch({ type: 'CHANGE_LOGIN_STATE', payload: status })
+    }
+
+    const handleBalance = async (total) => {
+        const data = await getDocs(usersRef)
+        const user = data.docs.find((doc) => doc.data().userID === userID)
+        const updatedRef = doc(db, 'users', user.id)
+        await updateDoc(updatedRef, {
+            balance: (state.balance - total).toFixed(2),
+        })
+        
+        dispatch({
+            type: 'TRANSACTION',
+            payload: (state.balance - total).toFixed(2),
+        })
     }
 
     return (
-        <AppContext.Provider value={{ ...state, addToCart, increaseHandler, decreaseHandler, showModal, changeLogin }}>
+        <AppContext.Provider
+            value={{
+                ...state,
+                addToCart,
+                increaseHandler,
+                decreaseHandler,
+                showModal,
+                changeLogin,
+                handleBalance,
+            }}
+        >
             {props.children}
         </AppContext.Provider>
     )
