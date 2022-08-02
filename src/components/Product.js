@@ -6,7 +6,6 @@ import { motion } from 'framer-motion'
 
 export default function Product({ keyword }) {
     const { items, isLogin, addToCart } = useContext(AppContext)
-    console.log(items)
     const filteredItems = items.filter(
         (item) =>
             item.title.toLowerCase().includes(keyword.toLowerCase()) ||
