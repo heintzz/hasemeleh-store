@@ -5,12 +5,13 @@ import back from '../icons/back.svg'
 import SkeletonAbout from '../skeletons/About/SkeletonAbout'
 
 export default function Detail() {
-    const {items} = useContext(AppContext)
+    const { items } = useContext(AppContext)
     const { itemId } = useParams()
+    console.log(itemId)
     const { img, title, type, price } = items.length
         ? items.find((item) => item.id === itemId)
         : {}
-    
+
     return items.length ? (
         <div className="w-11/12 max-w-4xl mt-[26px] ml-10">
             <Link to="/" className="flex items-center gap-x-2">
@@ -24,6 +25,7 @@ export default function Detail() {
                             <img
                                 src={img}
                                 alt="demo item"
+                                key={n}
                                 className="bg-red-200 rounded-lg"
                             />
                         ))}
@@ -35,8 +37,12 @@ export default function Detail() {
                     />
                 </div>
                 <div>
-                    <h1 className="text-sm md:text-2xl font-semibold">{title}</h1>
-                    <h3 className="text-xs md:text-sm text-slate-400">{type}</h3>
+                    <h1 className="text-sm md:text-2xl font-semibold">
+                        {title}
+                    </h1>
+                    <h3 className="text-xs md:text-sm text-slate-400">
+                        {type}
+                    </h3>
                     <p className="my-5 text-xs">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Iure esse ducimus impedit, omnis nam facere sequi

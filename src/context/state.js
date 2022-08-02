@@ -46,7 +46,7 @@ export default function AppState(props) {
         const getInfo = async () => {
             const res = await getDocs(productsRef)
             const data = res.docs.map((item) => {
-                return { ...item.data(), id: item }
+                return { ...item.data(), id: item.id }
             })
             dispatch({ type: 'GET_ITEMS', payload: data })
 
