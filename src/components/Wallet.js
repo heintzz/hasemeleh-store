@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import AppContext from '../context/AppContext'
 
 export default function Wallet() {
@@ -19,6 +20,8 @@ export default function Wallet() {
             </div>
         </div>
     ) : (
-        <p className="absolute top-0 left-12 w-40">Login first.</p>
+        <p className="absolute top-0 left-12 w-40">
+            <Link to="/login" className='underline text-blue-800'>Login</Link> first.
+        </p>
     )
 }
