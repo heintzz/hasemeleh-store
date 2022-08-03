@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import AppContext from '../context/AppContext'
 
 export default function Wallet() {
-    const { balance } = useContext(AppContext)
+    const { balance, isLogin } = useContext(AppContext)
     
-    return (
+    return isLogin ? (
         <div className="absolute top-0 left-12 h-52 w-60 p-5">
             <div className="flex items-center gap-x-3 animate-pulse">
                 <div className="h-10 w-10 rounded-full bg-slate-50"></div>
@@ -18,5 +18,7 @@ export default function Wallet() {
                 <p className="text-xl">{`$ ${balance}`}</p>
             </div>
         </div>
+    ) : (
+        <p className="absolute top-0 left-12 w-40">Login first.</p>
     )
 }
