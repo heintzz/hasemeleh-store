@@ -32,7 +32,7 @@ function reducer(state, action) {
         case CHANGE_LOGIN_STATE:
             return { ...state, isLogin: action.payload }
         case TRANSACTION:
-            return { ...state, balance: action.payload }
+            return { ...state, balance: action.payload, carts: [] }
         default:
             return state
     }

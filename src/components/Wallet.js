@@ -3,6 +3,7 @@ import AppContext from '../context/AppContext'
 
 export default function Wallet() {
     const { balance } = useContext(AppContext)
+    
     return (
         <div className="absolute top-0 left-12 h-52 w-60 p-5">
             <div className="flex items-center gap-x-3 animate-pulse">

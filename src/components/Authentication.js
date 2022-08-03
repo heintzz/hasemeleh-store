@@ -51,17 +51,18 @@ export default function Authentication({ authType }) {
                     )
                 })
                 .catch((err) => {
+                    setProcess(false)
                     setErrorType(err.code)
                     setShowError(true)
                     setTimeout(() => {
                         setShowError(false)
-                    }, 1500)
+                    }, 2500)
                 })
         } else {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(async (userCredential) => {
                     const user = userCredential.user.uid
-                    await addDoc(usersRef, { userID: user, carts: [] })
+                    await addDoc(usersRef, { userID: user, carts: [], balance: 4000 })
                     setProcess(false)
                     setSuccess(true)
                     setTimeout(() => {
@@ -70,12 +71,13 @@ export default function Authentication({ authType }) {
                     setInput({ email: '', password: '' })
                 })
                 .catch((err) => {
+                    setProcess(false)
                     setErrorType(err.code)
                     setSuccess(false)
                     setShowError(true)
                     setTimeout(() => {
                         setShowError(false)
-                    }, 1500)
+                    }, 2500)
                 })
         }
     }
