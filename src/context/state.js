@@ -162,8 +162,9 @@ export default function AppState(props) {
         const updatedRef = doc(db, 'users', user.id)
         await updateDoc(updatedRef, {
             balance: (state.balance - total).toFixed(2),
+            carts: [],
         })
-        
+
         dispatch({
             type: 'TRANSACTION',
             payload: (state.balance - total).toFixed(2),

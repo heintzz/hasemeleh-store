@@ -4,6 +4,7 @@ import AppContext from '../context/AppContext'
 
 export default function Wallet() {
     const { balance, isLogin } = useContext(AppContext)
+    const wallet = balance ? balance : 'refresh'
     
     return isLogin ? (
         <div className="absolute top-0 left-12 h-52 w-60 p-5">
@@ -16,7 +17,7 @@ export default function Wallet() {
             </div>
             <div className="mt-10 w-40 text-xs">
                 <h1>Cash Balance</h1>
-                <p className="text-xl">{`$ ${balance}`}</p>
+                <p className="text-xl">{`$ ${wallet}`}</p>
             </div>
         </div>
     ) : (
