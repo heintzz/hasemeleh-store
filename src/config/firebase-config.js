@@ -3,8 +3,8 @@ import { getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyDKmdnmLgQ9LNE5-8GI5Ya1-N-D3aoqlaY',
-    authDomain: 'e-commerce-24eeb.firebaseapp.com',
+    apiKey: `${process.env.REACT_APP_API_KEY}`,
+    authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
     projectId: 'e-commerce-24eeb',
     storageBucket: 'e-commerce-24eeb.appspot.com',
     messagingSenderId: '448110687314',
@@ -12,5 +12,6 @@ const firebaseConfig = {
 }
 
 initializeApp(firebaseConfig)
+
 export const db = getFirestore()
 export const auth = getAuth()

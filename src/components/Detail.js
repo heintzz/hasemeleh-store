@@ -7,7 +7,7 @@ import SkeletonAbout from '../skeletons/About/SkeletonAbout'
 export default function Detail() {
     const { items } = useContext(AppContext)
     const { itemId } = useParams()
-    console.log(itemId)
+
     const { img, title, type, price } = items.length
         ? items.find((item) => item.id === itemId)
         : {}
