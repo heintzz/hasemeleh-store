@@ -16,25 +16,14 @@ export default function Product({ keyword }) {
         <div className="flex flex-wrap mt-10">
             {keyword ? (
                 filteredItems.length ? (
-                    filteredItems.map((item, time) => {
+                    filteredItems.map((item) => {
                         return (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{
-                                    opacity: 1,
-                                    transition: {
-                                        duration: 1,
-                                        delay: time * 0.25,
-                                    },
-                                }}
-                            >
-                                <Item
-                                    item={item}
-                                    addToCart={addToCart}
-                                    isLogin={isLogin}
-                                    key={item.id}
-                                />
-                            </motion.div>
+                            <Item
+                                item={item}
+                                addToCart={addToCart}
+                                isLogin={isLogin}
+                                key={item.id}
+                            />
                         )
                     })
                 ) : (
