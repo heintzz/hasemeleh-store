@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import Item from './Item'
 import AppContext from '../context/AppContext'
 import notFound from '../icons/not-found.svg'
-import { motion } from 'framer-motion'
 
 export default function Product({ keyword }) {
     const { items, isLogin, addToCart } = useContext(AppContext)
