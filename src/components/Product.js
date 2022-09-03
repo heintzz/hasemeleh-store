@@ -2,8 +2,10 @@ import React, { useContext } from 'react'
 import Item from './Item'
 import AppContext from '../context/AppContext'
 import notFound from '../icons/not-found.svg'
+import { useNavigate } from 'react-router-dom'
 
 export default function Product({ keyword }) {
+  let navigate = useNavigate()
   const { items, isLogin, addToCart } = useContext(AppContext)
   const filteredItems = items.filter(
     (item) =>
@@ -35,7 +37,7 @@ export default function Product({ keyword }) {
             <div className="mb-5">Item not found...</div>
             <button
               className="bg-red-300 w-fit py-1 px-2 rounded-xl"
-              onClick={() => window.location.reload()}
+              onClick={() => navigate('/')}
             >
               Back
             </button>
