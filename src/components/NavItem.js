@@ -49,7 +49,7 @@ export default function NavItem({isOpen, setIsOpen, type}) {
                         onClick={
                             isLoading
                                 ? ''
-                                : function () {
+                                : function() {
                                       showModal(true)
                                       setIsOpen(false)
                                   }
